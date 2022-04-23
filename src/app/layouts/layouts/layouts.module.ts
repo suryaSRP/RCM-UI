@@ -9,6 +9,8 @@ import { BaseComponentRoutingModule } from 'src/app/base-component/base-componen
 import { BaseComponentModule } from 'src/app/base-component/base-component.module';
 import { HeaderTabComponent } from '../header-tab/header-tab.component';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
     FormsModule,
     BrowserModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    MatToolbarModule
   ],
   exports: [
     NavBarComponent,

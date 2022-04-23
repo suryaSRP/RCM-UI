@@ -21,7 +21,7 @@ export class BaseStructureComponent implements OnInit {
   public listView: boolean = false;
   public search: any = '';
   ngOnInit() {
-
+console.log(localStorage.getItem("clientCd"),'localStorage.getItem("clientCd")')
     // this.companyData = companyData
     // this.companyClickedId = companyData[0].company_id
   }

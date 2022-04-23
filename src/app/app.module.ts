@@ -10,7 +10,8 @@ import { LayoutsModule } from './layouts/layouts/layouts.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -25,9 +26,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    // LayoutsModule,
-    // BaseComponentRoutingModule,
     BaseComponentModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    LayoutsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

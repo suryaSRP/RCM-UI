@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
@@ -18,23 +18,29 @@ export class AuthService {
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
 
-  constructor(private httpClient: HttpClient, public router: Router) { }
+  constructor(private httpClient: HttpClient,
+    public router: Router,
+    private route: ActivatedRoute) { }
 
   register(user: User): Observable<any> {
     return this.httpClient.post(`${this.API_URL}/api/auth/signup`, user).pipe(
       catchError(this.handleError)
     )
   }
-
+  getClntDtls(clntId: any): Observable<any> {
+    return this.httpClient.get(`${this.API_URL}/getClientDtls/${clntId}`, { headers: this.headers })
+  }
   login(user: User) {
     return this.httpClient.post<any>(`${this.API_URL}/api/auth/signin`, user)
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.token)
-        this.getUserProfile(res._id).subscribe((res) => {
-          this.currentUser = res;
-          console.log(this.currentUser,"this.currentUserthis.currentUserthis.currentUser")
-          this.router.navigate(['users/profile/' + res.msg._id]);
-        })
+        // this.getUserProfile(res._id).subscribe((res) => {
+        //   this.currentUser = res;
+        //   console.log(this.currentUser, "this.currentUserthis.currentUserthis.currentUser")
+        //   // this.router.navigate(['users/profile/' + res.msg._id]);
+        //   this.router.navigate(['company'])
+        // })
+        this.router.navigate(['company'])
       })
   }
 
@@ -48,8 +54,10 @@ export class AuthService {
   }
 
   logout() {
+    console.log(localStorage.getItem("clientCd"), "this.route.snapshot.paramMap")
+    var clientLogged = localStorage.getItem("clientCd")
     if (localStorage.removeItem('access_token') == null) {
-      this.router.navigate(['users/login']);
+      this.router.navigate([`${clientLogged}/login`]);
     }
   }
 
