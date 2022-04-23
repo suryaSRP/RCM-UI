@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="row headerTab">herders</div>
+  <div class="row">
+      <div class="col-1" style="width: 5.4%;">
+          <div class="sidebar close">
+              <div class="logo-details">
+                  <i class="bx bxl-c-plus-plus"></i>
+                  <span class="logo_name">CodingLab</span>
+              </div>
+              <ul class="nav-links">
+                  <li>
+                      <a href="#">
+                          <i class="bx bx-grid-alt"></i>
+                          <span class="link_name">Base To</span>
+                      </a>
+                      <ul class="sub-menu blank">
+                          <li><a class="link_name" href="/company">Company</a></li>
+                      </ul>
+                  </li>
+                  <li>
+                      <div class="iocn-link">
+                          <a href="#">
+                              <i class="bx bx-collection"></i>
+                              <span class="link_name">Base To</span>
+                          </a>
+                          <i class="bx bxs-chevron-down arrow"></i>
+                      </div>
+                      <ul class="sub-menu">
+                          <li><a class="link_name" href="#">Category</a></li>
+                          <li><a href="#">HTML & CSS</a></li>
+                          <li><a href="#">JavaScript</a></li>
+                          <li><a href="#">PHP & MySQL</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          </div>
+      </div>
+      <div class="col-11" style="width: 94%;">
+          <router-outlet></router-outlet>
+      </div>
+  </div>
+</div>
+
+<script>
+  let arrow = document.querySelectorAll(".arrow");
+  for (var i = 0; i < arrow.length; i++) {
+      arrow[i].addEventListener("click", (e) => {
+          let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+          arrowParent.classList.toggle("showMenu");
+      });
+  }
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".bx-menu");
+  console.log(sidebarBtn);
+  sidebarBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+  });
+</script>

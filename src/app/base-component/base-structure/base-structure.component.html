@@ -1,0 +1,96 @@
+<div *ngFor="let data of companyData; let i = index">
+  <div class="card">
+    <div class="card-body companyBodyClass" [attr.data-target]="'#' + i" data-toggle="collapse">
+      <span (click)="onClick(data.company_id,'company')">
+        <a [attr.aria-expanded]="!gfg" aria-controls="collapseExample">
+          {{data.company_name}}
+        </a>
+      </span>
+      <p class="viewGroupIcon">
+        <span>
+          <select class="form-select form-select-sm"(change)="searchCategoryChange($event)" aria-label=".form-select-sm example">
+            <option selected value="Org">Organisation</option>
+            <option value="pstn">Position</option>
+            <option value="emp">Employee</option>
+          </select>
+        </span>
+        <span>
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search" style="height: 31px;"  [(ngModel)]="search" id="listSearch">
+        </span>
+        <span class="viewIcon"(click)="viewInfo()">
+          <i class="fa fa-info-circle fa-6"></i>
+        </span>
+
+        <span (click)="viewChange('card',data.company_id)" *ngIf="listView">
+          <i class="fa fa-th-large"></i>
+        </span>
+        <span (click)="viewChange('list',data.company_id)" *ngIf="cardView">
+          <i class="fa fa-solid fa-list"></i>
+        </span>
+      </p>
+    </div>
+
+  </div>
+
+  <div *ngIf="cardView">
+    <div *ngFor="let org of data.org_info| searchFilter: search ; let j = index" [attr.id]="i">
+      <div #collapse="ngbCollapse" [(ngbCollapse)]="gfg" [hidden]="data.company_id !== companyClickedId">
+        <div class="card orgTab">
+          <div class="card-body" (click)="onClick(org.org_id,'org')" [attr.data-target]="'#' + j"
+            data-toggle="collapse">
+            <a [attr.aria-expanded]="!gfg" aria-controls="collapseExample">
+              {{org.org_name}}
+            </a>
+            <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div *ngFor="let pstn of org.positions" [attr.id]="i">
+          <div #collapse="ngbCollapse" [(ngbCollapse)]="gfg" [hidden]="org.org_id !== orgClickedId">
+            <div class="card pstnTab">
+              <div class="card-body" (click)="onClick(pstn.pstn_id,'position')" [attr.data-target]="'#' + i"
+                data-toggle="collapse">
+                <a [attr.aria-expanded]="!gfg" aria-controls="collapseExample">
+                  {{pstn.pstn_name}}
+                </a>
+                <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="listView">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td colspan="2">Larry the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
