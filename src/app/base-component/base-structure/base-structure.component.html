@@ -1,4 +1,69 @@
-<!-- <div *ngFor="let data of companyData; let i = index">
+
+<!-- <app-nav-bar></app-nav-bar> -->
+<app-base-component></app-base-component>
+<mat-card class="customCard">
+  <mat-accordion class="example-headers-align" multi="true">
+
+    <mat-expansion-panel showToggle="true">
+      <mat-expansion-panel-header>
+        Company : Stark Industries
+      </mat-expansion-panel-header>
+
+      <!-- use template to force lazy rendering -->
+      <ng-template matExpansionPanelContent>
+        <mat-accordion class="example-headers-align" multi="false">
+
+          <!-- cdkVirtualFor -->
+          <mat-expansion-panel *ngFor="let item of items; let i = index;" [expanded]="step === i" (opened)="setStep(i)"
+            showToggle="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Organisation: {{item}}
+              </mat-panel-title>
+              <mat-panel-description>
+                Description for {{ item }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+
+      <ng-template matExpansionPanelContent>
+        <mat-accordion class="example-headers-align" multi="false">
+
+          <!-- cdkVirtualFor -->
+          <mat-expansion-panel *ngFor="let item of items; let i = index;" [expanded]="step === i" (opened)="setStep(i)"
+            showToggle="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                positions: {{item}}
+              </mat-panel-title>
+              <mat-panel-description>
+                Description for {{ item }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <ng-template matExpansionPanelContent>
+              <mat-form-field appearance="fill">
+                <mat-label>First name</mat-label>
+                <input matInput>
+              </mat-form-field>
+
+              <!-- <mat-action-row>
+                <button *ngIf="step !== 0" mat-button color="secondary" (click)="prevStep()  ">Prev</button>
+                <button *ngIf="step !== items.length -1" mat-button color="primary" (click)="nextStep()">Next</button>
+              </mat-action-row> -->
+            </ng-template>
+          </mat-expansion-panel>
+
+        </mat-accordion>
+      </ng-template>
+          </mat-expansion-panel>
+
+        </mat-accordion>
+      </ng-template>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+  <!-- <div *ngFor="let data of companyData; let i = index">
   <div class="card">
     <div class="card-body companyBodyClass" [attr.data-target]="'#' + i" data-toggle="collapse">
       <span (click)="onClick(data.company_id,'company')">
@@ -94,5 +159,4 @@
     </table>
   </div>
 </div> -->
-<app-nav-bar></app-nav-bar>
-<p>Company Work Fine ...!</p>
+</mat-card>

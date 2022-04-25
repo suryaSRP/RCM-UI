@@ -10,6 +10,7 @@ export class BaseComponentComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log("base component hitted")
   }
 
 }

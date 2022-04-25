@@ -1,12 +1,12 @@
-<!-- <div class="row">
-  <div class="row headerTab">herders</div>
+<div class="row">
+  <!-- <div class="row headerTab">herders</div> -->
   <div class="row">
       <div class="col-1" style="width: 5.4%;">
           <div class="sidebar close">
-              <div class="logo-details">
+              <!-- <div class="logo-details">
                   <i class="bx bxl-c-plus-plus"></i>
                   <span class="logo_name">CodingLab</span>
-              </div>
+              </div> -->
               <ul class="nav-links">
                   <li>
                       <a href="#">
@@ -14,7 +14,7 @@
                           <span class="link_name">Base To</span>
                       </a>
                       <ul class="sub-menu blank">
-                          <li><a class="link_name" href="/company">Company</a></li>
+                          <li><a class="link_name" href="/base">Company</a></li>
                       </ul>
                   </li>
                   <li>
@@ -55,16 +55,16 @@
   sidebarBtn.addEventListener("click", () => {
       sidebar.classList.toggle("close");
   });
-</script> -->
+</script>
 
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <span>Ambu </span>
-    <span *ngIf="clientDetails?.clientName" style="padding-left: 10px;"><span> | </span><span></span>
-      {{clientDetails?.clientName}} </span>
+    <span *ngIf="ClientName" style="padding-left: 10px;"><span> | </span><span></span>
+      {{ClientName}} </span>
     <span class="spacer"></span>
-    <span ><a mat-button routerLink="/contactus" style="color: white">Contact Us</a></span>
-    <span *ngIf="userLoggedin" (click)="logout()">Logout</span>
+    <span ><a mat-button routerLink="/contactus" class="headerIcon" title="Contact us"><i class="fa fa-question-circle fa-2xl" aria-hidden="true"></i></a></span>
+    <span *ngIf="userLoggedin" (click)="logout()" class="headerIcon" title="Logout"><i class="fa fa-sign-out fa-2xl" aria-hidden="true"></i></span>
   </mat-toolbar-row>
 </mat-toolbar>
 <router-outlet></router-outlet>

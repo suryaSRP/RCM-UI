@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
   public clientCode: any;
   public knownClient: boolean = false;
   public clientDetails: any;
+  public clientName!: string
+  selected = 'en';
   constructor(
     public formBuilder: FormBuilder,
     public authService: AuthService,
@@ -30,8 +32,9 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('clientCd', this.clientDetails.length > 0 ? this.clientDetails[0]["clientCd"] : "NoClient");
     localStorage.setItem('clientId', this.clientDetails.length > 0 ? this.clientDetails[0]["clientId"] : "NoClient");
     localStorage.setItem('clientName', this.clientDetails.length > 0 ? this.clientDetails[0]["clientName"] : "NoClient");
+    this.clientName = this.clientDetails.length > 0 ? this.clientDetails[0]["clientName"] : undefined
     this.loginForm = this.formBuilder.group({
-      clientCD: new FormControl((this.knownClient == true) ? this.clientCode : "", [Validators.required]),
+      clientCD: new FormControl((this.knownClient == true) ? this.clientDetails[0]["clientCd"] : "", [Validators.required]),
       userID: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     })
@@ -43,4 +46,8 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginForm.value)
     }
   }
+  getUrl()
+{
+  return "url(../../assets/images/map)";
+}
 }

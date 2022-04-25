@@ -18,8 +18,25 @@ export class AuthGuard implements CanActivate {
     if (this.authService.isLoggedIn() !== true) {
       window.alert("Access not allowed!");
       this.router.navigate(['/users/login'])
+      return false
     }
     return true;
   }
+  // canActivate(
+  //   route: ActivatedRouteSnapshot,
+  //   state: RouterStateSnapshot): boolean {
+  //   if (this.authService.isLoggedIn()) {
+  //     return true;
+  //   } else if (window.location.href.split("/")[4] == "login") {
+  //     return false;
+  //   } else {
+  //     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+  //     return false;
+  //   }
+  // }
+
+  // canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  //   return this.canActivate(childRoute, state);
+  // }
 
 }

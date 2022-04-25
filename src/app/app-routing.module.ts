@@ -13,7 +13,9 @@ const routes: Routes = [
   { path: ':clntId/login', component: LoginComponent,
   resolve: { clientResolver: clientDetailResolver } },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile/:id', component: UserProfileComponent, canActivate: [AuthGuard] }
+  { path: 'profile/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
+  // {path:":client",loadChildren: () => import('../app/base-component/base-component.module').then(x => x.BaseComponentModule)
+  // , canActivate: [AuthGuard]}
 ];
 
 @NgModule({

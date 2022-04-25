@@ -34,13 +34,15 @@ export class AuthService {
     return this.httpClient.post<any>(`${this.API_URL}/api/auth/signin`, user)
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.token)
+        var clientname = localStorage.getItem("clientCd")
+        console.log(`/${clientname}/dboard`,"routessssssssssss")
         // this.getUserProfile(res._id).subscribe((res) => {
         //   this.currentUser = res;
         //   console.log(this.currentUser, "this.currentUserthis.currentUserthis.currentUser")
         //   // this.router.navigate(['users/profile/' + res.msg._id]);
         //   this.router.navigate(['company'])
         // })
-        this.router.navigate(['company'])
+        this.router.navigate([`dboard`])
       })
   }
 

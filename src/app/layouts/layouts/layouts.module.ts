@@ -11,6 +11,7 @@ import { HeaderTabComponent } from '../header-tab/header-tab.component';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { AppMaterialModule } from 'src/app/app.module.material';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     ReactiveFormsModule,
     NgbModule,
     BrowserAnimationsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    AppMaterialModule
   ],
   exports: [
     NavBarComponent,

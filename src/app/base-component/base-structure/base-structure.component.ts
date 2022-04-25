@@ -20,6 +20,7 @@ export class BaseStructureComponent implements OnInit {
   public cardView: boolean = true;
   public listView: boolean = false;
   public search: any = '';
+  public items=["arr1","arr2","arr3"]
   ngOnInit() {
 console.log(localStorage.getItem("clientCd"),'localStorage.getItem("clientCd")')
     // this.companyData = companyData
@@ -57,5 +58,17 @@ console.log(localStorage.getItem("clientCd"),'localStorage.getItem("clientCd")')
   searchCategoryChange(eve: any) {
     this.searchCategory = eve.target.value
   }
+  step = 0;
 
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
 }

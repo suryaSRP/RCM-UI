@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
   <form class="form-login" [formGroup]="loginForm" (ngSubmit)="loginUser()">
       <h3 class="h3 mb-3 font-weight-normal text-center">Login</h3>
       <div class="form-group" *ngIf="!knownClient">
@@ -13,9 +13,48 @@
           <label>Password</label>
           <input type="password" class="form-control" formControlName="password" placeholder="Password">
       </div>
-      <!-- <div *ngIf="loginForm.get">
-
-      </div> -->
       <button type="submit" class="btn btn-block btn-primary">Login!</button>
   </form>
-</div>
+</div> -->
+
+<form>
+  <div class="login-container" style="background-image: url('../../assets/images/map.jpg');">
+    <div class="login-content">
+      <mat-toolbar class="login-toolbar" color="primary"><span>RCM</span><span> | {{clientName}}</span> </mat-toolbar>
+      <mat-card style="background-color: rgb(181 236 231 / 74%);">
+        <form [formGroup]="loginForm" #formDirective="ngForm" (ngSubmit)="loginUser()">
+          <mat-form-field>
+            <mat-icon matPrefix>person_outline</mat-icon>
+            <input autofocus type="text" matInput placeholder="Client Code" formControlName="clientCD"
+              [readonly]="knownClient">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-icon matPrefix>person_outline</mat-icon>
+            <input autofocus type="text" matInput placeholder="Username" formControlName="userID">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <input type="password" autocomplete="false" matInput placeholder="Password" formControlName="password">
+          </mat-form-field>
+          <mat-grid-list cols="2" rowHeight="2:1">
+            <mat-grid-tile>
+              <button type="submit" mat-raised-button color="primary">LOGIN</button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </form>
+        <!-- <mat-toolbar class="login-toolbar" style="background-color:white"></mat-toolbar> -->
+        <div class="socialMediaFlex">
+          <span><a>Forgot Password</a></span>
+          <span><a>Change Password</a></span>
+          <!-- <button mat-fab color="primary"><i class="fab fa-facebook-f"></i></button>
+						<button mat-fab color="accent"><i class="fab fa-google"></i></button> -->
+        </div>
+        <br>
+
+
+
+
+      </mat-card>
+    </div>
+  </div>

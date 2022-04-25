@@ -11,7 +11,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { AppMaterialModule } from './app.module.material';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     BaseComponentModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    LayoutsModule
+    LayoutsModule,
+    AppMaterialModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
