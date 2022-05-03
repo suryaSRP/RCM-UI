@@ -30,10 +30,16 @@ export class AuthService {
   getClntDtls(clntId: any): Observable<any> {
     return this.httpClient.get(`${this.API_URL}/getClientDtls/${clntId}`, { headers: this.headers })
   }
+
+  companyData(user: any): Observable<any> {
+    console.log("cmpany services hitted")
+    return this.httpClient.get(`${this.API_URL}/api/companyDtls`, { headers: this.headers })
+  }
   login(user: User) {
     return this.httpClient.post<any>(`${this.API_URL}/api/auth/signin`, user)
       .subscribe((res: any) => {
-        localStorage.setItem('access_token', res.token)
+        let loginResult = res.result
+        localStorage.setItem('access_token', loginResult.token?loginResult.token:loginResult.accessToken)
         var clientname = localStorage.getItem("clientCd")
         console.log(`/${clientname}/dboard`,"routessssssssssss")
         // this.getUserProfile(res._id).subscribe((res) => {

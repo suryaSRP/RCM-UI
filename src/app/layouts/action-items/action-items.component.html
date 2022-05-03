@@ -1,0 +1,25 @@
+<div class="operationItems">
+  <span class="operationSpan" *ngIf="searchFldFlag">
+    <mat-form-field>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput type="search" placeholder={{placeHolder}} class="search-input"  [ngModel]="searchValue"
+      (ngModelChange)="change($event)">
+    </mat-form-field>
+  </span>
+  <span class="operationSpan" *ngIf="sortFldFlag">
+    <!-- <mat-mini-fab style="font-size:24px"><i class="fa fa-sort"></i></mat-mini-fab> -->
+    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+      <mat-icon>sort_by_alpha</mat-icon>
+    </button>
+  </span>
+  <span class="operationSpan" *ngIf="addFldFlag">
+    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+      <mat-icon>library_add</mat-icon>
+    </button>
+  </span>
+  <span class="operationSpan" *ngIf="infoFldFlag">
+    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+      <mat-icon>info</mat-icon>
+    </button>
+  </span>
+</div>

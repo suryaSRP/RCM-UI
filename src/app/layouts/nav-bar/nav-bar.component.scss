@@ -10,6 +10,9 @@
   color: white;
   cursor: pointer;
 }
+.mat-button.mat-primary .mat-button-focus-overlay {
+  background-color: transparent;
+}
 * {
     margin: 0;
     padding: 0;

@@ -12,12 +12,16 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { AppMaterialModule } from 'src/app/app.module.material';
+import { ActionItemsComponent } from '../action-items/action-items.component';
+import { SearchPipe } from 'src/app/common/pipes/search.pipe';
 
 
 @NgModule({
   declarations: [
     NavBarComponent,
-    HeaderTabComponent],
+    HeaderTabComponent,
+    ActionItemsComponent,
+    ],
   imports: [
     CommonModule,
     LayoutsRoutingModule,
@@ -33,7 +37,8 @@ import { AppMaterialModule } from 'src/app/app.module.material';
   ],
   exports: [
     NavBarComponent,
-    HeaderTabComponent
+    HeaderTabComponent,
+    ActionItemsComponent
   ]
 })
 export class LayoutsModule { }

@@ -1,162 +1,66 @@
-
 <!-- <app-nav-bar></app-nav-bar> -->
 <app-base-component></app-base-component>
 <mat-card class="customCard">
   <mat-accordion class="example-headers-align" multi="true">
 
-    <mat-expansion-panel showToggle="true">
-      <mat-expansion-panel-header>
-        Company : Stark Industries
+    <mat-expansion-panel showToggle="true" *ngFor="let baseDt of baseData; let i = index;"
+      [expanded]="companyClickedId === baseDt.cmpny_id" (opened)="setStep(baseDt.cmpny_id,'company')"
+      class="disable_ripple">
+
+      <mat-expansion-panel-header>Company : {{baseDt.cmpny_name}}
       </mat-expansion-panel-header>
 
-      <!-- use template to force lazy rendering -->
-      <ng-template matExpansionPanelContent>
+      <ng-template matExpansionPanelContent *ngIf="baseDt.orgInfo.length">
         <mat-accordion class="example-headers-align" multi="false">
+          <app-action-items [searchFldFlag]=true [sortFldFlag]=true [addFldFlag]=true [infoFldFlag]=true
+         (sharedVarChange)="searchOn($event)"></app-action-items>
+          <mat-expansion-panel *ngFor="let baseOrg of baseDt.orgInfo|searchFilter:searchOrg;" [expanded]="orgClickedId === baseOrg.org_unit_id"
+            (opened)="setStep(baseOrg.org_unit_id,'org')" showToggle="true" class="disable_ripple">
 
-          <!-- cdkVirtualFor -->
-          <mat-expansion-panel *ngFor="let item of items; let i = index;" [expanded]="step === i" (opened)="setStep(i)"
-            showToggle="true">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Organisation: {{item}}
-              </mat-panel-title>
-              <mat-panel-description>
-                Description for {{ item }}
-              </mat-panel-description>
+            <mat-expansion-panel-header (click)="positionDetails(baseOrg.org_unit_id)">
+              <mat-panel-title> Organisation: {{baseOrg.org_titl_tx}}</mat-panel-title>
+              <mat-panel-description> Description for {{ "item" }} </mat-panel-description>
             </mat-expansion-panel-header>
 
-
-      <ng-template matExpansionPanelContent>
-        <mat-accordion class="example-headers-align" multi="false">
-
-          <!-- cdkVirtualFor -->
-          <mat-expansion-panel *ngFor="let item of items; let i = index;" [expanded]="step === i" (opened)="setStep(i)"
-            showToggle="true">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                positions: {{item}}
-              </mat-panel-title>
-              <mat-panel-description>
-                Description for {{ item }}
-              </mat-panel-description>
-            </mat-expansion-panel-header>
 
             <ng-template matExpansionPanelContent>
-              <mat-form-field appearance="fill">
-                <mat-label>First name</mat-label>
-                <input matInput>
-              </mat-form-field>
+              <mat-accordion class="example-headers-align" multi="false">
 
-              <!-- <mat-action-row>
-                <button *ngIf="step !== 0" mat-button color="secondary" (click)="prevStep()  ">Prev</button>
-                <button *ngIf="step !== items.length -1" mat-button color="primary" (click)="nextStep()">Next</button>
-              </mat-action-row> -->
+                <mat-expansion-panel *ngFor="let pstnData of pstnDataArray" (click)="employeeDetails(pstnData.pstn_id)"
+                  [expanded]="pstnClickedId === pstnData.pstn_id" (opened)="setStep(pstnData.pstn_id,'position')">
+
+                  <mat-expansion-panel-header>
+                    <mat-panel-title> positions: {{pstnData.pstn_titl_tx}}</mat-panel-title>
+                    <mat-panel-description> Description for {{ pstnData.pstn_ds }} </mat-panel-description>
+                  </mat-expansion-panel-header>
+
+                  <ng-template matExpansionPanelContent>
+
+                    <mat-card-content *ngIf="!pstnData.isVacant">
+                      "Employee are yet to assign for this Position"
+                    </mat-card-content>
+                    <!-- <mat-form-field appearance="fill">
+                      <mat-label>First name</mat-label>
+                      <input matInput>
+                    </mat-form-field> -->
+                  </ng-template>
+                </mat-expansion-panel>
+
+              </mat-accordion>
             </ng-template>
+
+            <mat-card-content *ngIf="pstnDataArray.length == 0">
+              "Positions are not Found for this Organisation"
+            </mat-card-content>
           </mat-expansion-panel>
 
         </mat-accordion>
       </ng-template>
-          </mat-expansion-panel>
 
-        </mat-accordion>
-      </ng-template>
+      <mat-card-content *ngIf="baseDt.orgInfo.length == 0">
+        "Organisation are not Found for this Company"
+      </mat-card-content>
     </mat-expansion-panel>
 
   </mat-accordion>
-  <!-- <div *ngFor="let data of companyData; let i = index">
-  <div class="card">
-    <div class="card-body companyBodyClass" [attr.data-target]="'#' + i" data-toggle="collapse">
-      <span (click)="onClick(data.company_id,'company')">
-        <a [attr.aria-expanded]="!gfg" aria-controls="collapseExample">
-          {{data.company_name}}
-        </a>
-      </span>
-      <p class="viewGroupIcon">
-        <span>
-          <select class="form-select form-select-sm"(change)="searchCategoryChange($event)" aria-label=".form-select-sm example">
-            <option selected value="Org">Organisation</option>
-            <option value="pstn">Position</option>
-            <option value="emp">Employee</option>
-          </select>
-        </span>
-        <span>
-          <input class="form-control" type="text" placeholder="Search" aria-label="Search" style="height: 31px;"  [(ngModel)]="search" id="listSearch">
-        </span>
-        <span class="viewIcon"(click)="viewInfo()">
-          <i class="fa fa-info-circle fa-6"></i>
-        </span>
-
-        <span (click)="viewChange('card',data.company_id)" *ngIf="listView">
-          <i class="fa fa-th-large"></i>
-        </span>
-        <span (click)="viewChange('list',data.company_id)" *ngIf="cardView">
-          <i class="fa fa-solid fa-list"></i>
-        </span>
-      </p>
-    </div>
-
-  </div>
-
-  <div *ngIf="cardView">
-    <div *ngFor="let org of data.org_info| searchFilter: search ; let j = index" [attr.id]="i">
-      <div #collapse="ngbCollapse" [(ngbCollapse)]="gfg" [hidden]="data.company_id !== companyClickedId">
-        <div class="card orgTab">
-          <div class="card-body" (click)="onClick(org.org_id,'org')" [attr.data-target]="'#' + j"
-            data-toggle="collapse">
-            <a [attr.aria-expanded]="!gfg" aria-controls="collapseExample">
-              {{org.org_name}}
-            </a>
-            <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div *ngFor="let pstn of org.positions" [attr.id]="i">
-          <div #collapse="ngbCollapse" [(ngbCollapse)]="gfg" [hidden]="org.org_id !== orgClickedId">
-            <div class="card pstnTab">
-              <div class="card-body" (click)="onClick(pstn.pstn_id,'position')" [attr.data-target]="'#' + i"
-                data-toggle="collapse">
-                <a [attr.aria-expanded]="!gfg" aria-controls="collapseExample">
-                  {{pstn.pstn_name}}
-                </a>
-                <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="listView">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div> -->
 </mat-card>

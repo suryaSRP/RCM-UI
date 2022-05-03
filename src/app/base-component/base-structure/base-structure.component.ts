@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth.service';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 
 @Component({
   selector: 'app-base-structure',
@@ -9,37 +11,32 @@ import { Component, OnInit } from '@angular/core';
 export class BaseStructureComponent implements OnInit {
   public hideme: any;
   searchCategory: any;
-
-  constructor() { }
+  public baseData: Array<any> = []
+  public pstnDataArray: Array<any> = [];
+  @Input() sharedVarChange: any
+  constructor(
+    public apiservice: ApiServiceService,
+    public authservice: AuthService
+  ) { }
   public gfg = false;
-  public companyData: any;
   public companyClickedId: Number = 1;
-  public orgClickedId: Number = 0;
-  public pstnClickedId: Number = 0;
+  public orgClickedId: any = 0;
+  public pstnClickedId: any = 0;
   public empClickedId: Number = 0;
   public cardView: boolean = true;
   public listView: boolean = false;
   public search: any = '';
-  public items=["arr1","arr2","arr3"]
+  public items = ["arr1", "arr2", "arr3"]
+  public searchOrg: string = ""
   ngOnInit() {
-console.log(localStorage.getItem("clientCd"),'localStorage.getItem("clientCd")')
-    // this.companyData = companyData
-    // this.companyClickedId = companyData[0].company_id
+    this.apiservice.prsnMenuDtls("").subscribe(resp => {
+      console.log(resp, "response")
+      this.baseData = resp.data
+    })
   }
-  onClick(id: Number, category: any) {
-    if (category == "company") {
-      this.companyClickedId = (this.companyClickedId == id) ? 0 : id
-      console.log(this.companyClickedId, "company_id_clicked", id)
-    } else if (category == "org") {
-      this.orgClickedId = (this.orgClickedId == id) ? 0 : id
-      console.log(this.orgClickedId, "org_id_clicked")
-    } else if (category == "position") {
-      this.pstnClickedId = (this.pstnClickedId == id) ? 0 : id
-      console.log(this.pstnClickedId, "pstnClickedId_id_clicked")
-    } else if (category == "employee") {
-      this.empClickedId = (this.empClickedId == id) ? 0 : id
-      console.log(this.empClickedId, "empClickedId_id_clicked")
-    }
+  searchOn(event: any) {
+    console.log(event, "event_searchOn")
+    this.searchOrg = this.search
   }
   viewChange(viewType: any, company_id: any) {
     console.log(viewType, "view_type_selected")
@@ -58,17 +55,40 @@ console.log(localStorage.getItem("clientCd"),'localStorage.getItem("clientCd")')
   searchCategoryChange(eve: any) {
     this.searchCategory = eve.target.value
   }
-  step = 0;
+  cmpnyCollapse = 0;
 
-  setStep(index: number) {
-    this.step = index;
+  setStep(id: any, category: any) {
+    if (category == "company") {
+      console.log(id, "setStep_index_value")
+      this.companyClickedId = id;
+      console.log(id, "setStep_index_value", this.cmpnyCollapse)
+    } else if (category == "org") {
+      this.orgClickedId = (this.orgClickedId == id) ? 0 : id
+      console.log(this.orgClickedId, "org_id_clicked")
+    } else if (category == "position") {
+      console.log(id, "setStep_position_id", this.pstnClickedId)
+      // this.pstnClickedId = id
+      this.pstnClickedId = (this.pstnClickedId == id) ? 0 : id
+    } else if (category == "employee") {
+      this.empClickedId = (this.empClickedId == id) ? 0 : id
+      console.log(this.empClickedId, "empClickedId_id_clicked")
+    }
   }
+  positionDetails(orgId: any) {
 
-  nextStep() {
-    this.step++;
+    this.apiservice.pstnDtls(orgId).subscribe(resp => {
+      console.log(resp, "response")
+      this.pstnDataArray = resp.data
+    })
   }
+  employeeDetails(pstnId: any) {
 
-  prevStep() {
-    this.step--;
   }
+  // nextStep() {
+  //   this.step++;
+  // }
+
+  // prevStep() {
+  //   this.step--;
+  // }
 }
