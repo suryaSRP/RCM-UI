@@ -27,16 +27,49 @@ export class BaseStructureComponent implements OnInit {
   public listView: boolean = false;
   public search: any = '';
   public items = ["arr1", "arr2", "arr3"]
-  public searchOrg: string = ""
+  public searchOrg: any = ""
+  public searchPstn: any = ""
+  public searchEmp: any = ""
+  public sortOrg: any = ""
+  public sortPstn: any = ""
+  public sortEmp: any = ""
   ngOnInit() {
     this.apiservice.prsnMenuDtls("").subscribe(resp => {
       console.log(resp, "response")
       this.baseData = resp.data
     })
   }
-  searchOn(event: any) {
-    console.log(event, "event_searchOn")
-    this.searchOrg = this.search
+  searchOn(event: any, category: any) {
+    if (event.action == "search") {
+      if (category == "company") {
+      } else if (category == "org") {
+        console.log(event, "event_searchOn")
+        this.searchOrg = event.data
+      } else if (category == "position") {
+        console.log(event, "event_searchOn")
+        this.searchPstn = event.data
+      } else if (category == "employee") {
+        console.log(event, "event_searchOn")
+        this.searchEmp = event.data
+      }
+    }
+  }
+
+  sortOn(event: any, category: any) {
+    console.log(category,"sort_on_clicked")
+    if (event.action == "sort") {
+      if (category == "company") {
+      } else if (category == "org") {
+        console.log(event, "event_sortOn_org")
+        this.sortOrg = event.data
+      } else if (category == "position") {
+        console.log(event, "event_sortOn_position")
+        this.sortPstn = event.data
+      } else if (category == "employee") {
+        console.log(event, "event_sortOn_employee")
+        this.sortEmp = event.data
+      }
+    }
   }
   viewChange(viewType: any, company_id: any) {
     console.log(viewType, "view_type_selected")

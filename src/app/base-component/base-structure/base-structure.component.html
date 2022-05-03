@@ -13,9 +13,10 @@
       <ng-template matExpansionPanelContent *ngIf="baseDt.orgInfo.length">
         <mat-accordion class="example-headers-align" multi="false">
           <app-action-items [searchFldFlag]=true [sortFldFlag]=true [addFldFlag]=true [infoFldFlag]=true
-         (sharedVarChange)="searchOn($event)"></app-action-items>
-          <mat-expansion-panel *ngFor="let baseOrg of baseDt.orgInfo|searchFilter:searchOrg;" [expanded]="orgClickedId === baseOrg.org_unit_id"
-            (opened)="setStep(baseOrg.org_unit_id,'org')" showToggle="true" class="disable_ripple">
+            (sharedVarChange)="searchOn($event,'org')" (sharedVarChange)="sortOn($event,'org')"></app-action-items>
+          <mat-expansion-panel *ngFor="let baseOrg of baseDt.orgInfo | orderBy : 'org_titl_tx': sortOrg | searchFilter : searchOrg ; "
+            [expanded]="orgClickedId === baseOrg.org_unit_id" (opened)="setStep(baseOrg.org_unit_id,'org')"
+            showToggle="true" class="disable_ripple">
 
             <mat-expansion-panel-header (click)="positionDetails(baseOrg.org_unit_id)">
               <mat-panel-title> Organisation: {{baseOrg.org_titl_tx}}</mat-panel-title>
@@ -26,7 +27,9 @@
             <ng-template matExpansionPanelContent>
               <mat-accordion class="example-headers-align" multi="false">
 
-                <mat-expansion-panel *ngFor="let pstnData of pstnDataArray" (click)="employeeDetails(pstnData.pstn_id)"
+                <app-action-items [searchFldFlag]=true [sortFldFlag]=true [addFldFlag]=true [infoFldFlag]=true
+                (sharedVarChange)="sortOn($event,'position')"></app-action-items>
+                <mat-expansion-panel *ngFor="let pstnData of pstnDataArray| searchFilter : searchPstn;" (click)="employeeDetails(pstnData.pstn_id)"
                   [expanded]="pstnClickedId === pstnData.pstn_id" (opened)="setStep(pstnData.pstn_id,'position')">
 
                   <mat-expansion-panel-header>

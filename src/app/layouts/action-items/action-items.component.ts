@@ -15,17 +15,20 @@ export class ActionItemsComponent implements OnInit {
   @Input() editFldFlag: boolean = false
   @Input() infoFldFlag: boolean = false
   @Input() placeHolder: string = "search here"
-  @Input() searchValue: any = ""
+  @Input() searchValue: { action: string; data: any; } = { action: "", data: "" }
+  @Input() sortClicked: { action: string; data: any; } = { action: "", data: "" }
   @Output() sharedVarChange = new EventEmitter();
-  // @Output() searchValue = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit(): void {
   }
   change(newValue: any) {
-    console.log('newvalue', newValue)
-    this.searchValue = newValue;
-    this.sharedVarChange.emit(newValue);
+    this.searchValue = { action: "search", data: newValue };
+    this.sharedVarChange.emit(this.searchValue);
+  }
+  onSortClick(event: any) {
+    this.sortClicked = (this.sortClicked.data == event) ? { action: "sort", data: false } : { action: "sort", data: true }
+    this.sharedVarChange.emit(this.sortClicked);
   }
   // addNewItem(value: string = "") {
   //   this.searchValue.emit("");

@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppMaterialModule } from '../app.module.material';
+import { OrderByPipe } from '../common/pipes/order-by.pipe';
 import { SearchPipe } from '../common/pipes/search.pipe';
 import { LayoutsModule } from '../layouts/layouts/layouts.module';
 import { BaseComponentRoutingModule } from './base-component-routing.module';
@@ -19,9 +20,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   declarations: [
     BaseStructureComponent,
-    SearchPipe,
     BaseComponentComponent,
     DashboardComponent,
+    SearchPipe,
+    OrderByPipe,
   ],
   imports: [
     CommonModule,
