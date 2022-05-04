@@ -13,6 +13,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppMaterialModule } from './app.module.material';
+import { ModalModule } from './common/modal/modal/modal.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AppMaterialModule } from './app.module.material';
     BrowserAnimationsModule,
     MatToolbarModule,
     LayoutsModule,
-    AppMaterialModule
+    AppMaterialModule,
+    ModalModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

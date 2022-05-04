@@ -14,12 +14,14 @@
     </button>
   </span>
   <span class="operationSpan" *ngIf="addFldFlag">
-    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"
+    (click)="onCurdOpreation('add')">
       <mat-icon>library_add</mat-icon>
     </button>
   </span>
   <span class="operationSpan" *ngIf="infoFldFlag">
-    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"
+    (click)="onCurdOpreation('info')">
       <mat-icon>info</mat-icon>
     </button>
   </span>

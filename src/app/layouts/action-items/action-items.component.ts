@@ -17,6 +17,7 @@ export class ActionItemsComponent implements OnInit {
   @Input() placeHolder: string = "search here"
   @Input() searchValue: { action: string; data: any; } = { action: "", data: "" }
   @Input() sortClicked: { action: string; data: any; } = { action: "", data: "" }
+  @Input() CurdOptrnClicked: { action: string; data: any; } = { action: "", data: "" }
   @Output() sharedVarChange = new EventEmitter();
   constructor() { }
 
@@ -29,6 +30,10 @@ export class ActionItemsComponent implements OnInit {
   onSortClick(event: any) {
     this.sortClicked = (this.sortClicked.data == event) ? { action: "sort", data: false } : { action: "sort", data: true }
     this.sharedVarChange.emit(this.sortClicked);
+  }
+  onCurdOpreation(data: any) {
+    this.CurdOptrnClicked = { action: "modal", data: data }
+    this.sharedVarChange.emit(this.CurdOptrnClicked);
   }
   // addNewItem(value: string = "") {
   //   this.searchValue.emit("");

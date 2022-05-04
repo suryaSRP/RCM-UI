@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth.service';
+import { MatDialogComponent } from 'src/app/common/modal/mat-dialog/mat-dialog.component';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 
 @Component({
@@ -16,7 +18,8 @@ export class BaseStructureComponent implements OnInit {
   @Input() sharedVarChange: any
   constructor(
     public apiservice: ApiServiceService,
-    public authservice: AuthService
+    public authservice: AuthService,
+    public dialog: MatDialog
   ) { }
   public gfg = false;
   public companyClickedId: Number = 1;
@@ -40,23 +43,43 @@ export class BaseStructureComponent implements OnInit {
     })
   }
   searchOn(event: any, category: any) {
-    if (event.action == "search") {
-      if (category == "company") {
-      } else if (category == "org") {
+    if (category == "company") {
+    } else if (category == "org") {
+      if (event.action == "search") {
         console.log(event, "event_searchOn")
         this.searchOrg = event.data
-      } else if (category == "position") {
+      } else if (event.action == "sort") {
+        console.log(event, "event_sortOn_org")
+        this.sortOrg = event.data
+      }else if(event.action == "modal"){
+        if(event.data=="add"){
+          const dialogRef = this.dialog.open(MatDialogComponent, {
+            width: '500px',
+            data: {title:"Add Organisation"}
+          });
+        }else if(event.data=="info"){
+          const dialogRef = this.dialog.open(MatDialogComponent, {
+            width: '500px',
+            data: {title:'Company Information'}
+          });
+        }
+      }
+    } else if (category == "position") {
+      if (event.action == "search") {
         console.log(event, "event_searchOn")
         this.searchPstn = event.data
-      } else if (category == "employee") {
-        console.log(event, "event_searchOn")
-        this.searchEmp = event.data
+      } else if (event.action == "sort") {
+        console.log(event, "event_sortOn_position")
+        this.sortPstn = event.data
       }
+    } else if (category == "employee") {
+      console.log(event, "event_searchOn")
+      this.searchEmp = event.data
     }
   }
 
   sortOn(event: any, category: any) {
-    console.log(category,"sort_on_clicked")
+    console.log(category, "sort_on_clicked")
     if (event.action == "sort") {
       if (category == "company") {
       } else if (category == "org") {
