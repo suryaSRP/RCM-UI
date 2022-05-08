@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppMaterialModule } from '../app.module.material';
+import { DynamicFieldsModule } from '../common/dynamic-fields/dynamic-fields.module';
 import { ModalModule } from '../common/modal/modal/modal.module';
 import { OrderByPipe } from '../common/pipes/order-by.pipe';
 import { SearchPipe } from '../common/pipes/search.pipe';
@@ -38,7 +39,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     AppMaterialModule,
-    ModalModule
+    ModalModule,
+    DynamicFieldsModule
   ],
   exports: [
     BaseStructureComponent

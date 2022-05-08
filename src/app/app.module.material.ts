@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatOptionModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -21,6 +21,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+// import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
   imports: [
@@ -29,10 +32,15 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatOptionModule, MatGridListModule,
     MatProgressBarModule, MatSliderModule,
     MatSlideToggleModule, MatMenuModule,
-    MatDialogModule, MatSnackBarModule, MatSelectModule,
-    MatInputModule, MatSidenavModule, MatCardModule,
-    MatIconModule, MatRadioModule, MatProgressSpinnerModule,
-    MatTabsModule, MatListModule, MatExpansionModule],
+    MatDialogModule, MatSnackBarModule,
+    MatSelectModule, MatCardModule,
+    MatInputModule, MatSidenavModule,
+    MatIconModule, MatRadioModule,
+    MatProgressSpinnerModule, MatExpansionModule,
+    MatTabsModule, MatListModule,
+    MatDatepickerModule, MatFormFieldModule,
+    MatNativeDateModule,
+  ],
   exports: [
     MatButtonModule, MatCheckboxModule,
     MatToolbarModule, MatChipsModule,
@@ -44,7 +52,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatSidenavModule, MatCardModule,
     MatIconModule, MatRadioModule,
     MatProgressSpinnerModule, MatTabsModule,
-    MatListModule,MatExpansionModule
+    MatListModule, MatExpansionModule,
+    MatDatepickerModule, MatFormFieldModule,
+    MatNativeDateModule,
   ],
 })
 export class AppMaterialModule { }

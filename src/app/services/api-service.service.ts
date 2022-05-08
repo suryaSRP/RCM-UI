@@ -35,4 +35,9 @@ export class ApiServiceService {
     }
     return throwError(msg);
   }
+
+  fetchFlds(pageInfo: any): Observable<any> {
+    console.log("fetchFlds pageInfo services hitted")
+    return this.httpClient.get(`${this.API_URL}/api/${pageInfo}/fetchFlds`, { headers: this.headers })
+  }
 }

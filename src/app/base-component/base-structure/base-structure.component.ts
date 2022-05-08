@@ -36,12 +36,24 @@ export class BaseStructureComponent implements OnInit {
   public sortOrg: any = ""
   public sortPstn: any = ""
   public sortEmp: any = ""
+  public flds: any = []
+  cmpnyCollapse = 0;
+
   ngOnInit() {
     this.apiservice.prsnMenuDtls("").subscribe(resp => {
       console.log(resp, "response")
       this.baseData = resp.data
     })
   }
+
+  fetchFlds(fldForPage: any): any {
+    this.apiservice.fetchFlds(fldForPage).subscribe(resp => {
+      console.log(resp, "field for this page " + fldForPage)
+      this.flds = resp
+      return this.flds
+    })
+  }
+
   searchOn(event: any, category: any) {
     if (category == "company") {
     } else if (category == "org") {
@@ -51,16 +63,17 @@ export class BaseStructureComponent implements OnInit {
       } else if (event.action == "sort") {
         console.log(event, "event_sortOn_org")
         this.sortOrg = event.data
-      }else if(event.action == "modal"){
-        if(event.data=="add"){
+      } else if (event.action == "modal") {
+        if (event.data == "add") {
+          this.fetchFlds('orgInfo')
           const dialogRef = this.dialog.open(MatDialogComponent, {
-            width: '500px',
-            data: {title:"Add Organisation"}
+            width: '750px',
+            data: { title: "Add Organisation", page: 'form', flds: this.flds }
           });
-        }else if(event.data=="info"){
+        } else if (event.data == "info") {
           const dialogRef = this.dialog.open(MatDialogComponent, {
             width: '500px',
-            data: {title:'Company Information'}
+            data: { title: 'Company Information' }
           });
         }
       }
@@ -78,22 +91,6 @@ export class BaseStructureComponent implements OnInit {
     }
   }
 
-  sortOn(event: any, category: any) {
-    console.log(category, "sort_on_clicked")
-    if (event.action == "sort") {
-      if (category == "company") {
-      } else if (category == "org") {
-        console.log(event, "event_sortOn_org")
-        this.sortOrg = event.data
-      } else if (category == "position") {
-        console.log(event, "event_sortOn_position")
-        this.sortPstn = event.data
-      } else if (category == "employee") {
-        console.log(event, "event_sortOn_employee")
-        this.sortEmp = event.data
-      }
-    }
-  }
   viewChange(viewType: any, company_id: any) {
     console.log(viewType, "view_type_selected")
     if (viewType === "list") {
@@ -105,13 +102,14 @@ export class BaseStructureComponent implements OnInit {
 
     }
   }
+
   viewInfo() {
 
   }
+
   searchCategoryChange(eve: any) {
     this.searchCategory = eve.target.value
   }
-  cmpnyCollapse = 0;
 
   setStep(id: any, category: any) {
     if (category == "company") {
@@ -130,6 +128,7 @@ export class BaseStructureComponent implements OnInit {
       console.log(this.empClickedId, "empClickedId_id_clicked")
     }
   }
+
   positionDetails(orgId: any) {
 
     this.apiservice.pstnDtls(orgId).subscribe(resp => {
@@ -137,6 +136,7 @@ export class BaseStructureComponent implements OnInit {
       this.pstnDataArray = resp.data
     })
   }
+
   employeeDetails(pstnId: any) {
 
   }

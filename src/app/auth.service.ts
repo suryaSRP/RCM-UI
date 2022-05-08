@@ -15,7 +15,7 @@ import { User } from './user';
 
 export class AuthService {
   API_URL: string = 'http://localhost:8081';
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
+  headers = new HttpHeaders({'Content-Type':'application/json',"clientsid":`${localStorage.getItem("clientCd")}`})
   currentUser = {};
 
   constructor(private httpClient: HttpClient,
@@ -40,6 +40,8 @@ export class AuthService {
       .subscribe((res: any) => {
         let loginResult = res.result
         localStorage.setItem('access_token', loginResult.token?loginResult.token:loginResult.accessToken)
+        localStorage.setItem("userLoggedIn",loginResult.email)
+        localStorage.setItem("role",loginResult.roles)
         var clientname = localStorage.getItem("clientCd")
         console.log(`/${clientname}/dboard`,"routessssssssssss")
         // this.getUserProfile(res._id).subscribe((res) => {
