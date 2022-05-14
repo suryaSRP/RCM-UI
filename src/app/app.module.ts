@@ -7,20 +7,15 @@ import { AppComponent } from './app.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { BaseComponentModule } from './base-component/base-component.module';
 import { LayoutsModule } from './layouts/layouts/layouts.module';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppMaterialModule } from './app.module.material';
 import { ModalModule } from './common/modal/modal/modal.module';
+import { CredComponentRoutingModule } from './cred-component/cred-component-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +28,8 @@ import { ModalModule } from './common/modal/modal/modal.module';
     MatToolbarModule,
     LayoutsModule,
     AppMaterialModule,
-    ModalModule
+    ModalModule,
+    CredComponentRoutingModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

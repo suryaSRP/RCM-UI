@@ -5,15 +5,14 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-
-import { User } from './user';
+import { User } from '../user';
 
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AuthService {
+export class credService {
   API_URL: string = 'http://localhost:8081';
   headers = new HttpHeaders({'Content-Type':'application/json',"clientsid":`${localStorage.getItem("clientCd")}`})
   currentUser = {};
@@ -42,6 +41,7 @@ export class AuthService {
         localStorage.setItem('access_token', loginResult.token?loginResult.token:loginResult.accessToken)
         localStorage.setItem("userLoggedIn",loginResult.email)
         localStorage.setItem("role",loginResult.roles)
+        sessionStorage.setItem("isUserLoggedIn","true")
         var clientname = localStorage.getItem("clientCd")
         console.log(`/${clientname}/dboard`,"routessssssssssss")
         // this.getUserProfile(res._id).subscribe((res) => {
@@ -50,7 +50,7 @@ export class AuthService {
         //   // this.router.navigate(['users/profile/' + res.msg._id]);
         //   this.router.navigate(['company'])
         // })
-        this.router.navigate([`dboard`])
+        this.router.navigate([`/${clientname}/dboard`])
       })
   }
 
@@ -67,6 +67,7 @@ export class AuthService {
     console.log(localStorage.getItem("clientCd"), "this.route.snapshot.paramMap")
     var clientLogged = localStorage.getItem("clientCd")
     if (localStorage.removeItem('access_token') == null) {
+      sessionStorage.setItem("isUserLoggedIn","false")
       this.router.navigate([`${clientLogged}/login`]);
     }
   }

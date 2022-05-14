@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from 'src/app/auth.service';
 import { MatDialogComponent } from 'src/app/common/modal/mat-dialog/mat-dialog.component';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 
@@ -18,7 +17,6 @@ export class BaseStructureComponent implements OnInit {
   @Input() sharedVarChange: any
   constructor(
     public apiservice: ApiServiceService,
-    public authservice: AuthService,
     public dialog: MatDialog
   ) { }
   public gfg = false;

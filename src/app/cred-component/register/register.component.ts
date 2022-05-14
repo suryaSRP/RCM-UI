@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
-// import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { credService } from 'src/app/services/credService.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +14,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    public authService: AuthService,
+    public credServices: credService,
     public router: Router
   ) {
     this.registerForm= this.formBuilder.group({
@@ -28,7 +27,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() { }
 
   registerUser() {
-    this.authService.register(this.registerForm.value).subscribe((res) => {
+    this.credServices.register(this.registerForm.value).subscribe((res) => {
       if (res.result) {
         this.registerForm.reset()
         this.router.navigate(['/asd/login']);

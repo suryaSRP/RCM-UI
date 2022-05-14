@@ -8,10 +8,10 @@ const routes: Routes = [
   { path: '', redirectTo: 'dboard', pathMatch: 'full' },
   {
     path: "dboard",
-    component: DashboardComponent, canActivate: [AuthGuard]
+    component: DashboardComponent,
   },{
     path: "base",
-    component: BaseStructureComponent, canActivate: [AuthGuard]
+    component: BaseStructureComponent,
   }
 ];
 

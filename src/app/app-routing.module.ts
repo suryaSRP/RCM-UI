@@ -1,25 +1,24 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './auth.guard';
-import { clientDetailResolver } from './common/resolver/baseComponent-resolver';
-
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/:clntId/login', pathMatch: 'full' },
-  { path: ':clntId/login', component: LoginComponent,
-  resolve: { clientResolver: clientDetailResolver } },
-  { path: 'register', component: RegisterComponent },
-  { path: 'profile/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
-  // {path:":client",loadChildren: () => import('../app/base-component/base-component.module').then(x => x.BaseComponentModule)
-  // , canActivate: [AuthGuard]}
+  {
+    path: ":client",
+    loadChildren: () => import('../app/base-component/base-component-routing.module').then(x => x.BaseComponentRoutingModule),
+     canActivate: [AuthService]
+  },
 ];
+const credRoutes: Routes = [
+  {
+    path: "",
+    loadChildren: () => import('../app/cred-component/cred-component.module').then(x => x.CredComponentModule)
+  }
+]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true }),],
   exports: [RouterModule]
 })
 

@@ -25,13 +25,9 @@ import { SearchPipe } from 'src/app/common/pipes/search.pipe';
   imports: [
     CommonModule,
     LayoutsRoutingModule,
-    // BaseComponentModule,
-    // BaseComponentRoutingModule,
     FormsModule,
-    BrowserModule,
     ReactiveFormsModule,
     NgbModule,
-    BrowserAnimationsModule,
     MatToolbarModule,
     AppMaterialModule
   ],

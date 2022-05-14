@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpInterceptor, HttpRequest, HttpHandler } from "@angular/common/http";
-import { AuthService } from "./auth.service";
+import { credService } from "./services/credService.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthService) { }
+    constructor(private credServices: credService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
-        const accessToken = this.authService.getAccessToken();
+        const accessToken = this.credServices.getAccessToken();
         console.log(accessToken,"accessToken_auth_service")
         req = req.clone({
             setHeaders: {

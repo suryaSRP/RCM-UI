@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-
-import { AuthService } from '../auth.service';
+import { credService } from '../../services/credService.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit {
   selected = 'en';
   constructor(
     public formBuilder: FormBuilder,
-    public authService: AuthService,
+    public credServices: credService,
     public router: Router, private route: ActivatedRoute
   ) {
     this.clientCode = this.route.snapshot.paramMap.get('clntId')
@@ -28,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.clientDetails = this.route.snapshot.data['clientResolver'].data
+    console.log(this.clientDetails,"this.clientDetailsthis.clientDetailsthis.clientDetails")
     this.knownClient = this.clientDetails.length > 0 ? true : false
     localStorage.setItem('clientCd', this.clientDetails.length > 0 ? this.clientDetails[0]["clientCd"] : "NoClient");
     localStorage.setItem('clientId', this.clientDetails.length > 0 ? this.clientDetails[0]["clientId"] : "NoClient");
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
   loginUser() {
     console.log(this.loginForm, "this.loginFormthis.loginFormthis.loginFormthis.loginForm")
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value)
+      this.credServices.login(this.loginForm.value)
     }
   }
   getUrl()

@@ -3,31 +3,30 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppMaterialModule } from '../app.module.material';
 import { DynamicFieldsModule } from '../common/dynamic-fields/dynamic-fields.module';
 import { ModalModule } from '../common/modal/modal/modal.module';
-import { OrderByPipe } from '../common/pipes/order-by.pipe';
-import { SearchPipe } from '../common/pipes/search.pipe';
+import { clientDetailResolver } from '../common/resolver/baseComponent-resolver';
 import { LayoutsModule } from '../layouts/layouts/layouts.module';
-import { BaseComponentRoutingModule } from './base-component-routing.module';
-import { BaseComponentComponent } from './base-component.component';
-import { BaseStructureComponent } from './base-structure/base-structure.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
-
+const routes: Routes = [
+  // { path: '', redirectTo: '/:clntId/login', pathMatch: 'full' },
+  {
+    path: ':clntId/login', component: LoginComponent,
+    resolve: { clientResolver: clientDetailResolver }
+  },
+  { path: 'register', component: RegisterComponent },];
 
 @NgModule({
-  declarations: [
-    BaseStructureComponent,
-    BaseComponentComponent,
-    DashboardComponent,
-    SearchPipe,
-    OrderByPipe,
-  ],
-  imports: [
+  declarations:[
+    LoginComponent,
+    RegisterComponent,],
+  imports: [RouterModule.forChild(routes),
     CommonModule,
-    BaseComponentRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
@@ -36,10 +35,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatToolbarModule,
     AppMaterialModule,
     ModalModule,
-    DynamicFieldsModule
-  ],
-  exports: [
-    BaseStructureComponent
-  ]
+    DynamicFieldsModule],
+  exports: [RouterModule]
 })
-export class BaseComponentModule { }
+export class CredComponentRoutingModule { }
