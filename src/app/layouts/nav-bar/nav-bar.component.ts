@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { credService } from 'src/app/services/credService.service';
 
 @Component({
@@ -9,11 +9,11 @@ import { credService } from 'src/app/services/credService.service';
 })
 export class NavBarComponent implements OnInit {
 
-  public clientCode: any;
+  public clientCode: any=localStorage.getItem("clientCd");
   public ClientName: any=localStorage.getItem("clientName")
   public userLoggedin: boolean = false
   constructor(public credServices: credService, private route: ActivatedRoute,
-    private activatedRoute: ActivatedRoute,) {
+    public router: Router,) {
   }
 
 
@@ -25,5 +25,10 @@ export class NavBarComponent implements OnInit {
   }
   logout() {
     this.credServices.logout()
+  }
+  toBase(){
+    if(this.userLoggedin){
+      this.router.navigate([`/${this.clientCode}/base`])
+    }
   }
 }

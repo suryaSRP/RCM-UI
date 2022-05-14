@@ -38,6 +38,7 @@ export class BaseStructureComponent implements OnInit {
   cmpnyCollapse = 0;
 
   ngOnInit() {
+    console.log("hitted_company _comp")
     this.apiservice.prsnMenuDtls("").subscribe(resp => {
       console.log(resp, "response")
       this.baseData = resp.data
