@@ -13,7 +13,7 @@
         <mat-accordion class="example-headers-align" multi="false">
           <div [attr.disabled]="true">
             <app-action-items [searchFldFlag]=true [sortFldFlag]=true [addFldFlag]=true [infoFldFlag]=true
-              (sharedVarChange)="searchOn($event,'org')"></app-action-items>
+              (sharedVarChange)="searchOn($event,'org')" [placeHolder]="dynamicPlaceHolder"></app-action-items>
           </div>
           <mat-expansion-panel
             *ngFor="let baseOrg of baseDt.orgInfo | orderBy : 'org_titl_tx': sortOrg | searchFilter : searchOrg ; "

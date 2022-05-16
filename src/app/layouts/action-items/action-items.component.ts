@@ -14,7 +14,15 @@ export class ActionItemsComponent implements OnInit {
   @Input() deleteFldFlag: boolean = false
   @Input() editFldFlag: boolean = false
   @Input() infoFldFlag: boolean = false
-  @Input() placeHolder: string = "search here"
+  @Input() placeHolder: {
+    search: string, sort: string,
+    info: string, add: string,
+    edit: string, delete: string
+  } = {
+      search: "Search Here", sort: "click to sort",
+      info: "information", add: "Add",
+      edit: "Edit", delete: "Delete"
+    }
   @Input() searchValue: { action: string; data: any; } = { action: "", data: "" }
   @Input() sortClicked: { action: string; data: any; } = { action: "", data: "" }
   @Input() CurdOptrnClicked: { action: string; data: any; } = { action: "", data: "" }

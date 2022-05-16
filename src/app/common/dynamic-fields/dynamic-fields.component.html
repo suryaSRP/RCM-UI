@@ -2,11 +2,18 @@
   <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" *ngFor="let field of dynamicFlds">
-          <div *ngIf="field.type == 'text'">
+        <div *ngFor="let field of dynamicFlds">
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"  *ngIf="field.type == 'text'">
             <mat-form-field appearance="outline">
               <mat-label>{{field.displayName}}</mat-label>
-              <input matInput placeholder='please enter {{field.displayName}}' [formControlName]="field.fld_nm">
+              <input matInput placeholder='please enter {{field.displayName}}' [formControlName]="field.fld_nm" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div *ngIf="field.type == 'textarea'">
+            <mat-form-field appearance="outline">
+              <mat-label>{{field.displayName}}</mat-label>
+              <input matInput placeholder='please enter {{field.displayName}}' [formControlName]="field.fld_nm" autocomplete="off">
+              <textarea matInput placeholder="please enter {{field.displayName}}" [formControlName]="field.fld_nm" autocomplete="off"></textarea>
             </mat-form-field>
           </div>
           <div *ngIf="field.type == 'date'">

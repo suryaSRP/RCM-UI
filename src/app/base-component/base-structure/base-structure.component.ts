@@ -35,6 +35,15 @@ export class BaseStructureComponent implements OnInit {
   public sortPstn: any = ""
   public sortEmp: any = ""
   public flds: any = []
+  public dynamicPlaceHolder: {
+    search: string, sort: string,
+    info: string, add: string,
+    edit: string, delete: string
+  } = {
+      search: "Search Here", sort: "click to sort",
+      info: "information", add: "Add",
+      edit: "Edit", delete: "Delete"
+    }
   cmpnyCollapse = 0;
 
   ngOnInit() {
@@ -45,11 +54,13 @@ export class BaseStructureComponent implements OnInit {
     })
   }
 
-  fetchFlds(fldForPage: any): any {
+  addOrgPstnEmp(fldForPage: any, title: string): any {
     this.apiservice.fetchFlds(fldForPage).subscribe(resp => {
-      console.log(resp, "field for this page " + fldForPage)
       this.flds = resp
-      return this.flds
+      const dialogRef = this.dialog.open(MatDialogComponent, {
+        width: '750px',
+        data: { title: title, page: 'form', flds: this.flds }
+      });
     })
   }
 
@@ -64,11 +75,7 @@ export class BaseStructureComponent implements OnInit {
         this.sortOrg = event.data
       } else if (event.action == "modal") {
         if (event.data == "add") {
-          this.fetchFlds('orgInfo')
-          const dialogRef = this.dialog.open(MatDialogComponent, {
-            width: '750px',
-            data: { title: "Add Organisation", page: 'form', flds: this.flds }
-          });
+          this.addOrgPstnEmp('orgInfo', "Add Organisation")
         } else if (event.data == "info") {
           const dialogRef = this.dialog.open(MatDialogComponent, {
             width: '500px',
@@ -114,14 +121,24 @@ export class BaseStructureComponent implements OnInit {
     if (category == "company") {
       console.log(id, "setStep_index_value")
       this.companyClickedId = id;
-      console.log(id, "setStep_index_value", this.cmpnyCollapse)
+      this.dynamicPlaceHolder={
+        search: "Search Organisation", sort: "Sort Organisation",info: "Company Info",
+        add: "Add Organisation",edit: "Edit", delete: "Delete"
+      }
     } else if (category == "org") {
       this.orgClickedId = (this.orgClickedId == id) ? 0 : id
-      console.log(this.orgClickedId, "org_id_clicked")
+      this.dynamicPlaceHolder={
+        search: "Search Position", sort: "Sort Position",info: "Organisation Info",
+        add: "Add Position",edit: "Edit", delete: "Delete"
+      }
     } else if (category == "position") {
       console.log(id, "setStep_position_id", this.pstnClickedId)
       // this.pstnClickedId = id
       this.pstnClickedId = (this.pstnClickedId == id) ? 0 : id
+      this.dynamicPlaceHolder={
+        search: "Search", sort: "Sort Employee",info: "Position Info",
+        add: "Add Employee",edit: "Edit", delete: "Delete"
+      }
     } else if (category == "employee") {
       this.empClickedId = (this.empClickedId == id) ? 0 : id
       console.log(this.empClickedId, "empClickedId_id_clicked")

@@ -2,26 +2,26 @@
   <span class="operationSpan" *ngIf="searchFldFlag">
     <mat-form-field>
       <mat-icon matPrefix>search</mat-icon>
-      <input matInput type="search" placeholder={{placeHolder}} class="search-input"  [(ngModel)]="searchValue.data"
+      <input matInput type="search" placeholder={{placeHolder.search}} class="search-input"  [(ngModel)]="searchValue.data"
       (ngModelChange)="change($event)" ngDefaultControl>
     </mat-form-field>
   </span>
   <span class="operationSpan" *ngIf="sortFldFlag">
     <!-- <mat-mini-fab style="font-size:24px"><i class="fa fa-sort"></i></mat-mini-fab> -->
-    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"  [(ngModel)]="sortClicked.data"
+    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" title="{{placeHolder.sort}}"  [(ngModel)]="sortClicked.data"
     (click)="onSortClick(true)" ngDefaultControl>
       <mat-icon>sort_by_alpha</mat-icon>
     </button>
   </span>
   <span class="operationSpan" *ngIf="addFldFlag">
     <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"
-    (click)="onCurdOpreation('add')">
+    (click)="onCurdOpreation('add')" title="{{placeHolder.add}}" >
       <mat-icon>library_add</mat-icon>
     </button>
   </span>
   <span class="operationSpan" *ngIf="infoFldFlag">
     <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"
-    (click)="onCurdOpreation('info')">
+    (click)="onCurdOpreation('info')" title="{{placeHolder.info}}" >
       <mat-icon>info</mat-icon>
     </button>
   </span>
