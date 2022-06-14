@@ -3,10 +3,13 @@ import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
-  title: string;
+  action: any;
+  currentData: any;
   flds: any;
-  action: string;
-  page: string
+  page: string;
+  showas: string;
+  title: string;
+  value: any;
 }
 @Component({
   selector: 'app-mat-dialog',
@@ -16,6 +19,8 @@ export interface DialogData {
 export class MatDialogComponent implements OnInit {
 
   public dynamicForm = new FormGroup({})
+  public selectedPageName: string = ""
+  public showButton: any = []
   constructor(
     public dialogRef: MatDialogRef<MatDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
@@ -23,25 +28,25 @@ export class MatDialogComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data, "data_data_data_data")
+    this.showButton = this.data.action
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  onNoClick(flag: any): void {
+    console.log(flag, "flag_on_click")
+    if (flag)
+      this.dialogRef.close();
+  }
+  getDynamicFormValue(value: any) {
+    console.log(value, "getDynamicFormValue_getDynamicFormValue_getDynamicFormValue")
+    if(value.status == "success"){
+      this.dialogRef.close();
+      window.location.reload()
+    }
   }
   submitForm(): void {
-    console.log(this.dynamicForm,"this.dynamicForm_this.dynamicForm_this.dynamicForm")
-  if(this.dynamicForm.valid){
-    console.log("valid form")
-  }
+    console.log(this.dynamicForm, "this.dynamicForm_this.dynamicForm_this.dynamicForm")
+    if (this.dynamicForm.valid) {
+      console.log("valid form")
+    }
   }
 }
-// @Component({
-//   selector: 'dialog-overview-example-dialog',
-//   templateUrl: 'dialog-overview-example-dialog.html',
-// })
-// export class DialogOverviewExampleDialog {
-
-//   constructor() {}
-
-
-// }

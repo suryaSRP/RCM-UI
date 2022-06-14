@@ -1,23 +1,22 @@
-<div *ngIf="data.page == 'form'">
-  <button class="close" mat-button (click)="onNoClick()">X</button>
-  <h1 class="formHeader" mat-dialog-title>{{data.title}}
+<ng-container *ngIf="data.showas == 'form'">
+  <div>
+    <div class="dialog-title">
+      <h1 class="formHeader" mat-dialog-title>{{data.title}}</h1>
+    </div>
+    <div mat-dialog-content>
+      <app-dynamic-fields [pageName]="selectedPageName" [fldDataArray]="data"
+        (dynamicFormResponse)="getDynamicFormValue($event)" (closeFlag)="onNoClick($event)" [buttonToShow]="showButton"></app-dynamic-fields>
+    </div>
+  </div>
+</ng-container>
 
-  </h1>
-  <div mat-dialog-content>
-    <app-dynamic-fields [fldDataArray]="data.flds"></app-dynamic-fields>
-</div>
-</div>
-
-<div *ngIf="data.page == 'dialog'">
+<div *ngIf="data.showas == 'dialog'">
   <h1 mat-dialog-title>{{data.title}}</h1>
   <div mat-dialog-content>
     <p>What's your favorite animal?</p>
-    <!-- <mat-form-field>
-    <input matInput [(ngModel)]="data.action">
-  </mat-form-field> -->
   </div>
   <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button (click)="onNoClick(true)">No Thanks</button>
     <button mat-button [mat-dialog-close]="data.action" cdkFocusInitial>Enter</button>
   </div>
 </div>

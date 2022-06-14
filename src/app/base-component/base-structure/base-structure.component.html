@@ -21,8 +21,9 @@
             showToggle="true" class="disable_ripple">
 
             <mat-expansion-panel-header (click)="positionDetails(baseOrg.org_unit_id)">
-              <mat-panel-title> Organisation: {{baseOrg.org_titl_tx}}</mat-panel-title>
-              <mat-panel-description> Description for {{ "item" }} </mat-panel-description>
+              <mat-panel-title style="max-width: 28em;"> Organisation code: {{baseOrg.org_unit_id}}</mat-panel-title>
+              <mat-panel-title style="max-width: 28em;"> Organisation: {{baseOrg.org_titl_tx}}</mat-panel-title>
+              <mat-panel-description style="max-width: 28em;"> Description: {{ baseOrg.org_desc }} </mat-panel-description>
             </mat-expansion-panel-header>
 
 

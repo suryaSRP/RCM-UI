@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgPipesModule } from 'ngx-pipes';
 import { AppMaterialModule } from '../app.module.material';
 import { DynamicFieldsModule } from '../common/dynamic-fields/dynamic-fields.module';
 import { ModalModule } from '../common/modal/modal/modal.module';
@@ -36,7 +37,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatToolbarModule,
     AppMaterialModule,
     ModalModule,
-    DynamicFieldsModule
+    DynamicFieldsModule,NgPipesModule
   ],
   exports: [
     BaseStructureComponent

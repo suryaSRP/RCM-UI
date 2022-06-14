@@ -35,6 +35,11 @@ export class BaseStructureComponent implements OnInit {
   public sortPstn: any = ""
   public sortEmp: any = ""
   public flds: any = []
+  public currentData = {
+    cmpny_id: this.companyClickedId,
+    org_unit_id: this.orgClickedId,
+    pstn_id: this.pstnClickedId
+  }
   public dynamicPlaceHolder: {
     search: string, sort: string,
     info: string, add: string,
@@ -54,13 +59,33 @@ export class BaseStructureComponent implements OnInit {
     })
   }
 
-  addOrgPstnEmp(fldForPage: any, title: string): any {
+  addOrgPstnEmp(fldForPage: any, title: string, currentGivenData: any): any {
     this.apiservice.fetchFlds(fldForPage).subscribe(resp => {
       this.flds = resp
       const dialogRef = this.dialog.open(MatDialogComponent, {
         width: '750px',
-        data: { title: title, page: 'form', flds: this.flds }
+        data: {
+          title: title, showas: 'form', flds: this.flds,
+          page: fldForPage, action: ["create", "cancel"], currentData: currentGivenData
+        }
       });
+    })
+  }
+
+  infoCompOrgPstnEmp(fldForPage: any, title: string, fetchValueFor: any): any {
+    this.apiservice.fetchFlds(fldForPage).subscribe(resp => {
+      if (resp) {
+        this.apiservice.getValueId(fldForPage, fetchValueFor).subscribe(dataResp => {
+          this.flds = resp
+          const dialogRef = this.dialog.open(MatDialogComponent, {
+            width: '750px',
+            data: {
+              title: title, showas: 'form', flds: this.flds,
+              page: fldForPage, action: ["close"], currentData: { "cmpny_id": this.companyClickedId, }
+            }
+          });
+        })
+      }
     })
   }
 
@@ -75,12 +100,9 @@ export class BaseStructureComponent implements OnInit {
         this.sortOrg = event.data
       } else if (event.action == "modal") {
         if (event.data == "add") {
-          this.addOrgPstnEmp('orgInfo', "Add Organisation")
+          this.addOrgPstnEmp('orgInfo', "Add Organisation", { "cmpny_id": this.companyClickedId, })
         } else if (event.data == "info") {
-          const dialogRef = this.dialog.open(MatDialogComponent, {
-            width: '500px',
-            data: { title: 'Company Information' }
-          });
+          this.infoCompOrgPstnEmp('companyInfos', 'View Company Information', this.companyClickedId)
         }
       }
     } else if (category == "position") {
@@ -121,23 +143,23 @@ export class BaseStructureComponent implements OnInit {
     if (category == "company") {
       console.log(id, "setStep_index_value")
       this.companyClickedId = id;
-      this.dynamicPlaceHolder={
-        search: "Search Organisation", sort: "Sort Organisation",info: "Company Info",
-        add: "Add Organisation",edit: "Edit", delete: "Delete"
+      this.dynamicPlaceHolder = {
+        search: "Search Organisation", sort: "Sort Organisation", info: "Company Info",
+        add: "Add Organisation", edit: "Edit", delete: "Delete"
       }
     } else if (category == "org") {
       this.orgClickedId = (this.orgClickedId == id) ? 0 : id
-      this.dynamicPlaceHolder={
-        search: "Search Position", sort: "Sort Position",info: "Organisation Info",
-        add: "Add Position",edit: "Edit", delete: "Delete"
+      this.dynamicPlaceHolder = {
+        search: "Search Position", sort: "Sort Position", info: "Organisation Info",
+        add: "Add Position", edit: "Edit", delete: "Delete"
       }
     } else if (category == "position") {
       console.log(id, "setStep_position_id", this.pstnClickedId)
       // this.pstnClickedId = id
       this.pstnClickedId = (this.pstnClickedId == id) ? 0 : id
-      this.dynamicPlaceHolder={
-        search: "Search", sort: "Sort Employee",info: "Position Info",
-        add: "Add Employee",edit: "Edit", delete: "Delete"
+      this.dynamicPlaceHolder = {
+        search: "Search", sort: "Sort Employee", info: "Position Info",
+        add: "Add Employee", edit: "Edit", delete: "Delete"
       }
     } else if (category == "employee") {
       this.empClickedId = (this.empClickedId == id) ? 0 : id

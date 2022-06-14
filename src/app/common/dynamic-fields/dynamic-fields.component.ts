@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 
 @Component({
   selector: 'app-dynamic-fields',
@@ -10,22 +11,42 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 export class DynamicFieldsComponent implements OnInit {
 
   @Input() fldDataArray: any
+  @Input() pageName: any
+  @Input() buttonToShow: any
   public dynamicForm = new FormGroup({})
   public dynamicFlds!: Array<any>;
-  constructor() { }
+  constructor(
+    private apiService: ApiServiceService
+  ) { }
   events: string[] = [];
+  @Output() dynamicFormResponse: EventEmitter<any> = new EventEmitter();
+  @Output() closeFlag: EventEmitter<any> = new EventEmitter();
 
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
   }
   ngOnInit(): void {
-    console.log(this.fldDataArray, "fldDataArray_fldDataArray")
-    this.dynamicFlds = this.fldDataArray
+    this.dynamicFlds = this.fldDataArray.flds
     this.dynamicFlds.forEach((formFlds: any) => {
       this.dynamicForm.addControl(formFlds.fld_nm, new FormControl(formFlds.value, Validators.required))
     })
+    this.dynamicFlds.sort((a, b) => {
+      return a.sq - b.sq;
+    });
+    console.log(this.dynamicFlds, "fldDataArray_fldDataArray")
   }
-  onSubmit(){
-    console.log(this.dynamicForm,"this.dynamicForm_this.dynamicForm_this.dynamicForm")
+  onSubmit(): void {
+    if (this.dynamicForm.valid) {
+      let finalData = {...this.dynamicForm.value, ...this.fldDataArray.currentData}
+      this.apiService.createOrgPstn(this.fldDataArray.page, finalData).subscribe(resp => {
+        console.log(resp, "resp_on_create")
+        this.dynamicFormResponse.emit(resp)
+      })
+    } else {
+      return
+    }
+  }
+  onclose() {
+    this.closeFlag.emit(true)
   }
 }

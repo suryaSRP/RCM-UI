@@ -29,7 +29,7 @@ import { CredComponentRoutingModule } from './cred-component/cred-component-rout
     LayoutsModule,
     AppMaterialModule,
     ModalModule,
-    CredComponentRoutingModule
+    CredComponentRoutingModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

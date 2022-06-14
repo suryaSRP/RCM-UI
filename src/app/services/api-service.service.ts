@@ -15,7 +15,7 @@ export class ApiServiceService {
     public router: Router,
     private route: ActivatedRoute) { }
 
-    prsnMenuDtls(user: any): Observable<any> {
+  prsnMenuDtls(user: any): Observable<any> {
     console.log("cmpany services hitted")
     return this.httpClient.get(`${this.API_URL}/api/prsnMenuDtls`, { headers: this.headers })
   }
@@ -37,7 +37,13 @@ export class ApiServiceService {
   }
 
   fetchFlds(pageInfo: any): Observable<any> {
-    console.log("fetchFlds pageInfo services hitted")
     return this.httpClient.get(`${this.API_URL}/api/${pageInfo}/fetchFlds`, { headers: this.headers })
+  }
+  createOrgPstn(pageInfo: any, formValue: any): Observable<any> {
+    console.log("fetchFlds pageInfo services hitted")
+    return this.httpClient.post(`${this.API_URL}/api/${pageInfo}/create`, formValue, { headers: this.headers })
+  }
+  getValueId(fetchDataBasedOn:any,fetchId:any): Observable<any> {
+    return this.httpClient.get(`${this.API_URL}/api/${fetchDataBasedOn}/${fetchId}`, { headers: this.headers })
   }
 }
