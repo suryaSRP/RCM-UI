@@ -10,6 +10,7 @@ export interface DialogData {
   showas: string;
   title: string;
   value: any;
+  validation:{}
 }
 @Component({
   selector: 'app-mat-dialog',

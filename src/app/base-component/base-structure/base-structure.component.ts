@@ -50,6 +50,9 @@ export class BaseStructureComponent implements OnInit {
       edit: "Edit", delete: "Delete"
     }
   cmpnyCollapse = 0;
+  public existingData: any = {
+    cmpny_id: [], org_unit_id: [], pstn_id: []
+  }
 
   ngOnInit() {
     console.log("hitted_company _comp")
@@ -65,7 +68,7 @@ export class BaseStructureComponent implements OnInit {
       const dialogRef = this.dialog.open(MatDialogComponent, {
         width: '750px',
         data: {
-          title: title, showas: 'form', flds: this.flds,
+          title: title, showas: 'form', flds: this.flds, validation: { duplicateCheck: this.existingData },
           page: fldForPage, action: ["create", "cancel"], currentData: currentGivenData
         }
       });
@@ -112,6 +115,12 @@ export class BaseStructureComponent implements OnInit {
       } else if (event.action == "sort") {
         console.log(event, "event_sortOn_position")
         this.sortPstn = event.data
+      } else if (event.action == "modal") {
+        if (event.data == "add") {
+          this.addOrgPstnEmp('orgInfo', "Add Organisation", { "cmpny_id": this.companyClickedId, })
+        } else if (event.data == "info") {
+          this.infoCompOrgPstnEmp('companyInfos', 'View Company Information', this.companyClickedId)
+        }
       }
     } else if (category == "employee") {
       console.log(event, "event_searchOn")
@@ -165,6 +174,7 @@ export class BaseStructureComponent implements OnInit {
       this.empClickedId = (this.empClickedId == id) ? 0 : id
       console.log(this.empClickedId, "empClickedId_id_clicked")
     }
+    this.dataHost(this.companyClickedId, this.orgClickedId, this.pstnClickedId)
   }
 
   positionDetails(orgId: any) {
@@ -172,17 +182,30 @@ export class BaseStructureComponent implements OnInit {
     this.apiservice.pstnDtls(orgId).subscribe(resp => {
       console.log(resp, "response")
       this.pstnDataArray = resp.data
+      this.dataHost(this.companyClickedId, this.orgClickedId, this.pstnClickedId)
     })
   }
 
   employeeDetails(pstnId: any) {
 
   }
-  // nextStep() {
-  //   this.step++;
-  // }
 
-  // prevStep() {
-  //   this.step--;
-  // }
+  dataHost(coId: any, OrgID?: any, PstnID?: any) {
+    this.baseData.forEach(dt => {
+      if (coId) {
+        if (dt.cmpny_id == coId) {
+          dt.orgInfo.forEach((orgDt: any) => {
+            this.existingData.org_unit_id.push(orgDt.org_unit_id)
+          });
+          if (OrgID) {
+            this.pstnDataArray.forEach((pstnDt: any) => {
+              if (pstnDt.org_unit_id == OrgID) {
+                this.existingData.pstn_id.push(pstnDt.pstn_id)
+              }
+            });
+          }
+        }
+      }
+    })
+  }
 }

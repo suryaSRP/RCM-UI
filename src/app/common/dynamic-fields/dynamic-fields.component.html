@@ -5,8 +5,10 @@
       <mat-form-field appearance="outline" *ngIf="field.type == 'text'">
         <mat-label>{{field.displayName}}</mat-label>
         <input matInput placeholder='please enter {{field.displayName}}' [formControlName]="field.fld_nm"
-          autocomplete="off">
+          autocomplete="off" (ngModelChange)="checkValue(field.fld_nm,$event)">
         <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('required')">{{field.displayName}} is required
+        </mat-error>
+        <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('Duplicate')">{{field.displayName}}'s Value is Existing
         </mat-error>
       </mat-form-field>
 

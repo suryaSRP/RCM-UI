@@ -26,6 +26,7 @@ export class DynamicFieldsComponent implements OnInit {
     this.events.push(`${type}: ${event.value}`);
   }
   ngOnInit(): void {
+    console.log(this.fldDataArray, "this.fldDataArray_this.fldDataArray")
     this.dynamicFlds = this.fldDataArray.flds
     this.dynamicFlds.forEach((formFlds: any) => {
       this.dynamicForm.addControl(formFlds.fld_nm, new FormControl(formFlds.value, Validators.required))
@@ -37,7 +38,7 @@ export class DynamicFieldsComponent implements OnInit {
   }
   onSubmit(): void {
     if (this.dynamicForm.valid) {
-      let finalData = {...this.dynamicForm.value, ...this.fldDataArray.currentData}
+      let finalData = { ...this.dynamicForm.value, ...this.fldDataArray.currentData }
       this.apiService.createOrgPstn(this.fldDataArray.page, finalData).subscribe(resp => {
         console.log(resp, "resp_on_create")
         this.dynamicFormResponse.emit(resp)
@@ -49,4 +50,16 @@ export class DynamicFieldsComponent implements OnInit {
   onclose() {
     this.closeFlag.emit(true)
   }
+  checkValue(fldName: any, event: any) {
+    if (this.fldDataArray.validation.duplicateCheck && this.fldDataArray.validation.duplicateCheck[fldName]) {
+      if(this.customIndexOf(this.fldDataArray.validation.duplicateCheck[fldName],event) > -1){
+        this.dynamicForm.controls[fldName].setErrors({ 'Duplicate': true })
+      }
+    }
+  }
+  customIndexOf(array: any[], searchElement: string, fromIndex?:any) {
+    return array.map(function(value: string) {
+      return value.toLowerCase();
+    }).indexOf(searchElement.toLowerCase(), fromIndex);
+  };
 }
