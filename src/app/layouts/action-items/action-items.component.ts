@@ -14,6 +14,7 @@ export class ActionItemsComponent implements OnInit {
   @Input() deleteFldFlag: boolean = false
   @Input() editFldFlag: boolean = false
   @Input() infoFldFlag: boolean = false
+  @Input() viewToggle:boolean = false
   @Input() placeHolder: {
     search: string, sort: string,
     info: string, add: string,
@@ -26,10 +27,14 @@ export class ActionItemsComponent implements OnInit {
   @Input() searchValue: { action: string; data: any; } = { action: "", data: "" }
   @Input() sortClicked: { action: string; data: any; } = { action: "", data: "" }
   @Input() CurdOptrnClicked: { action: string; data: any; } = { action: "", data: "" }
+  @Input() toggleClicked: { action: string; data: any; } = { action: "", data: "" }
   @Output() sharedVarChange = new EventEmitter();
+  public changedView:string='tree';
+  public isChecked = false
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.viewToggle,"viewToggleviewToggleviewToggle")
   }
   change(newValue: any) {
     this.searchValue = { action: "search", data: newValue };
@@ -46,4 +51,12 @@ export class ActionItemsComponent implements OnInit {
   // addNewItem(value: string = "") {
   //   this.searchValue.emit("");
   // }
+  changeView(viewType:string){
+console.log(viewType,"view type clicked")
+  }
+  viewChangedChanged(event:any){
+    this.isChecked=event.checked
+    this.toggleClicked = { action: "toggle", data: this.isChecked }
+    this.sharedVarChange.emit(this.toggleClicked);
+  }
 }

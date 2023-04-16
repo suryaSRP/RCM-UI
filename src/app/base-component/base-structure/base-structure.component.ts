@@ -20,7 +20,7 @@ export class BaseStructureComponent implements OnInit {
     public dialog: MatDialog
   ) { }
   public gfg = false;
-  public companyClickedId: Number = 1;
+  public companyClickedId: any = 1;
   public orgClickedId: any = 0;
   public pstnClickedId: any = 0;
   public empClickedId: Number = 0;
@@ -63,28 +63,57 @@ export class BaseStructureComponent implements OnInit {
   }
 
   addOrgPstnEmp(fldForPage: any, title: string, currentGivenData: any): any {
-    this.apiservice.fetchFlds(fldForPage).subscribe(resp => {
+    this.apiservice.fetchFlds(fldForPage, 'create').subscribe(resp => {
       this.flds = resp
       const dialogRef = this.dialog.open(MatDialogComponent, {
         width: '750px',
         data: {
           title: title, showas: 'form', flds: this.flds, validation: { duplicateCheck: this.existingData },
-          page: fldForPage, action: ["create", "cancel"], currentData: currentGivenData
+          page: fldForPage, action: ["create", "cancel"], currentData: currentGivenData, pageAction: "Create"
+        }
+      });
+    })
+  }
+  addEmp(fldForPage: any, id: any) {
+    console.log("add employee")
+    this.apiservice.fetchFlds(fldForPage, 'Create').subscribe(resp => {
+      this.flds = resp
+      const dialogRef = this.dialog.open(MatDialogComponent, {
+        width: '750px',
+        data: {
+          title: "Add Employee", showas: 'form', flds: this.flds, validation: { duplicateCheck: this.existingData },
+          page: fldForPage, action: ["create", "cancel"], currentData: id, pageAction: "Create"
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (result.actionPage === "positionMaster") {
+            console.log(result, "delete_data_dialog")
+            if (result.status == 'success') {
+              this.pstnClickedId = 0
+            }
+            this.positionDetails(this.orgClickedId)
+          }
         }
       });
     })
   }
 
-  infoCompOrgPstnEmp(fldForPage: any, title: string, fetchValueFor: any): any {
-    this.apiservice.fetchFlds(fldForPage).subscribe(resp => {
+  infoCompOrgPstnEmp(fldForPage: any, title: string, fetchValueOf: any): any {
+    console.log(fldForPage, "fldForPage_on_infoCompOrgPstnEmp", fetchValueOf)
+    this.apiservice.fetchFlds(fldForPage, 'edit').subscribe(resp => {
       if (resp) {
-        this.apiservice.getValueId(fldForPage, fetchValueFor).subscribe(dataResp => {
+        let currentData: any
+        if (fldForPage == "positionMaster") {
+          currentData = { "_id": fetchValueOf }
+        }
+        this.apiservice.getValueId(fldForPage, fetchValueOf).subscribe(dataResp => {
           this.flds = resp
           const dialogRef = this.dialog.open(MatDialogComponent, {
             width: '750px',
             data: {
-              title: title, showas: 'form', flds: this.flds,
-              page: fldForPage, action: ["close"], currentData: { "cmpny_id": this.companyClickedId, }
+              title: title, showas: 'form', flds: this.flds, formValue: dataResp.data,
+              page: fldForPage, action: ["close"], currentData: currentData, pageAction: "Information"
             }
           });
         })
@@ -92,7 +121,10 @@ export class BaseStructureComponent implements OnInit {
     })
   }
 
-  searchOn(event: any, category: any) {
+  searchOn(event: any, category: any, DataId: any) {
+    console.log(event, "event_on_SerachOn")
+    console.log(category, "category_on_SerachOn")
+    console.log(DataId, "DataId_on_SerachOn")
     if (category == "company") {
     } else if (category == "org") {
       if (event.action == "search") {
@@ -105,7 +137,7 @@ export class BaseStructureComponent implements OnInit {
         if (event.data == "add") {
           this.addOrgPstnEmp('orgInfo', "Add Organisation", { "cmpny_id": this.companyClickedId, })
         } else if (event.data == "info") {
-          this.infoCompOrgPstnEmp('companyInfos', 'View Company Information', this.companyClickedId)
+          this.infoCompOrgPstnEmp('companyInfos', 'View Company Information', DataId)
         }
       }
     } else if (category == "position") {
@@ -117,9 +149,9 @@ export class BaseStructureComponent implements OnInit {
         this.sortPstn = event.data
       } else if (event.action == "modal") {
         if (event.data == "add") {
-          this.addOrgPstnEmp('orgInfo', "Add Organisation", { "cmpny_id": this.companyClickedId, })
+          this.addOrgPstnEmp('positionMaster', "Add Position", { "cmpny_id": this.companyClickedId, "org_unit_id": this.orgClickedId })
         } else if (event.data == "info") {
-          this.infoCompOrgPstnEmp('companyInfos', 'View Company Information', this.companyClickedId)
+          this.infoCompOrgPstnEmp('orgInfo', 'View Organisation Information', DataId)
         }
       }
     } else if (category == "employee") {
@@ -158,6 +190,7 @@ export class BaseStructureComponent implements OnInit {
       }
     } else if (category == "org") {
       this.orgClickedId = (this.orgClickedId == id) ? 0 : id
+      this.pstnClickedId = 0
       this.dynamicPlaceHolder = {
         search: "Search Position", sort: "Sort Position", info: "Organisation Info",
         add: "Add Position", edit: "Edit", delete: "Delete"
@@ -208,4 +241,29 @@ export class BaseStructureComponent implements OnInit {
       }
     })
   }
+  deleteData(fldForPage: any, id: any) {
+    this.apiservice.fetchFlds(fldForPage, 'delete').subscribe(resp => {
+      this.flds = resp
+      const dialogRef = this.dialog.open(MatDialogComponent, {
+        width: '500px',
+        data: {
+          title: "Delete Confirmation", showas: 'dialog', flds: this.flds, validation: { duplicateCheck: this.existingData },
+          page: fldForPage, action: ["yes", "no"], currentData: id, pageAction: "Delete"
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (result.actionPage === "positionMaster") {
+            console.log(result, "delete_data_dialog")
+            if (result.status == 'success') {
+              this.pstnClickedId = 0
+            }
+            this.positionDetails(this.orgClickedId)
+          }
+        }
+      });
+    })
+  }
+  editData(fldForPage: any, id: any) { }
+
 }

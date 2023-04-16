@@ -2,27 +2,41 @@
   <span class="operationSpan" *ngIf="searchFldFlag">
     <mat-form-field>
       <mat-icon matPrefix>search</mat-icon>
-      <input matInput type="search" placeholder={{placeHolder.search}} class="search-input"  [(ngModel)]="searchValue.data"
-      (ngModelChange)="change($event)" ngDefaultControl>
+      <input matInput type="search" placeholder={{placeHolder.search}} class="search-input"
+        [(ngModel)]="searchValue.data" (ngModelChange)="change($event)" ngDefaultControl>
     </mat-form-field>
   </span>
   <span class="operationSpan" *ngIf="sortFldFlag">
     <!-- <mat-mini-fab style="font-size:24px"><i class="fa fa-sort"></i></mat-mini-fab> -->
-    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" title="{{placeHolder.sort}}"  [(ngModel)]="sortClicked.data"
-    (click)="onSortClick(true)" ngDefaultControl>
+    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" title="{{placeHolder.sort}}"
+      [(ngModel)]="sortClicked.data" (click)="onSortClick(true)" ngDefaultControl>
       <mat-icon>sort_by_alpha</mat-icon>
     </button>
   </span>
   <span class="operationSpan" *ngIf="addFldFlag">
     <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"
-    (click)="onCurdOpreation('add')" title="{{placeHolder.add}}" >
+      (click)="onCurdOpreation('add')" title="{{placeHolder.add}}">
       <mat-icon>library_add</mat-icon>
     </button>
   </span>
   <span class="operationSpan" *ngIf="infoFldFlag">
     <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"
-    (click)="onCurdOpreation('info')" title="{{placeHolder.info}}" >
+      (click)="onCurdOpreation('info')" title="{{placeHolder.info}}">
       <mat-icon>info</mat-icon>
     </button>
   </span>
+<span *ngIf="viewToggle">
+  <!-- <mat-label ngClass="labelBeforeSlide">Off</mat-label>
+  <mat-slide-toggle color="primary" [attr.data-before-content]="'yes'" [attr.data-after]="'no'"  (change)="viewChangedChanged($event)">On</mat-slide-toggle> -->
+  <mat-label ngClass="labelBeforeSlide">Position</mat-label>
+  <mat-slide-toggle [(ngModel)]="isChecked" (change)="viewChangedChanged($event)">Employee</mat-slide-toggle>
+</span>
+  <!-- <span class="toggle" *ngIf="viewToggle">{{viewToggle}} -->
+    <!-- <input type="radio" (click)="changeView('tree')" [(ngModel)]="changedView" [value]="'tree'"
+      [checked]="changedView == 'tree'" #toggle1/>
+    <label for="toggle1"> Tree </label>
+    <input type="radio" (click)="changeView('list')" [(ngModel)]="changedView" [value]="'list'"
+      [checked]="changedView == 'list'" #toggle2/>
+    <label for="toggle2"> List </label> -->
+  <!-- </span> -->
 </div>

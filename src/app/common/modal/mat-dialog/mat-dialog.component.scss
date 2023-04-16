@@ -1,9 +1,9 @@
-.formHeader{
+.formHeader {
   border-bottom: 1px solid;
-    text-align: center;
+  text-align: center;
 }
 .cdk-overlay-pane.my-dialog {
-  position: relative!important;
+  position: relative !important;
 }
 .close.mat-button {
   position: absolute;
@@ -12,4 +12,15 @@
   // padding: 5px;
   // line-height: 14px;
   min-width: auto;
+}
+.mat-grid-list {
+  display: block;
+  position: relative;
+  text-align: center;
+  /* padding: 0px 0px 0px 0px; */
+}
+.actionButton {
+  margin-left: 2em;
+  margin-right: 2em;
+  margin-top: 3em;
 }

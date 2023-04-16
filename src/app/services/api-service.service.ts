@@ -36,14 +36,22 @@ export class ApiServiceService {
     return throwError(msg);
   }
 
-  fetchFlds(pageInfo: any): Observable<any> {
-    return this.httpClient.get(`${this.API_URL}/api/${pageInfo}/fetchFlds`, { headers: this.headers })
+  fetchFlds(pageInfo: any, pageAction: {}): Observable<any> {
+    console.log(pageAction, "queryyyyyy")
+    return this.httpClient.get(`${this.API_URL}/api/${pageInfo}/fetchFlds/${pageAction}`, { headers: this.headers })
   }
   createOrgPstn(pageInfo: any, formValue: any): Observable<any> {
     console.log("fetchFlds pageInfo services hitted")
     return this.httpClient.post(`${this.API_URL}/api/${pageInfo}/create`, formValue, { headers: this.headers })
   }
-  getValueId(fetchDataBasedOn:any,fetchId:any): Observable<any> {
-    return this.httpClient.get(`${this.API_URL}/api/${fetchDataBasedOn}/${fetchId}`, { headers: this.headers })
+  updateOrgPstn(pageInfo: any, formValue: any,id:any): Observable<any> {
+    console.log("fetchFlds pageInfo updateOrgPstn-services hitted")
+    return this.httpClient.post(`${this.API_URL}/api/${pageInfo}/update/${id._id}`, formValue, { headers: this.headers })
+  }
+  getValueId(fetchDataBasedOn: any, fetchId: any): Observable<any> {
+    return this.httpClient.get(`${this.API_URL}/api/info/${fetchDataBasedOn}/${fetchId}`, { headers: this.headers })
+  }
+  deleteData(collectionName: any, dataID: any): Observable<any> {
+    return this.httpClient.post(`${this.API_URL}/api/deleteData/${collectionName}/${dataID}`, "", { headers: this.headers })
   }
 }

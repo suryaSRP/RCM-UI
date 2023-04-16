@@ -64,33 +64,56 @@ a.hover:hover {
   padding: 8px;
   box-shadow: 2px 3px 4px 3px #888888;
 }
-.customCard{
+.customCard {
   margin-left: 5%;
-    height: 90%;
+  height: 90%;
 }
-.disable_ripple:hover{
+.disable_ripple:hover {
   // background: currentColor !important;
   // outline: none;
   // border-color: #9ecaed;
   // box-shadow: 0 0 10px #9ecaed;
   border: solid #8888;
   // border: 1px solid #4195fc; /* some kind of blue border */
-    /* other CSS styles */
+  /* other CSS styles */
 
-    /* round the corners */
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
+  /* round the corners */
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 
-
-    /* make it glow! */
-    -webkit-box-shadow: 0px 0px 4px #4195fc;
-       -moz-box-shadow: 0px 0px 4px #4195fc;
-            box-shadow: 0px 0px 4px #4195fc;
+  /* make it glow! */
+  -webkit-box-shadow: 0px 0px 4px #4195fc;
+  -moz-box-shadow: 0px 0px 4px #4195fc;
+  box-shadow: 0px 0px 4px #4195fc;
+}
+.operationItems {
+  text-align: right;
+  .operationSpan {
+    padding: 0px 5px 0px 5px;
   }
-  .operationItems{
-    text-align: right;
-    .operationSpan{
-      padding: 0px 5px 0px 5px;
+}
+
+.example-headers-align {
+  .positionRow {
+    max-width: 30%;
+    white-space: nowrap;
+    mat-icon {
+      margin: 0px 10px 0px 0px;
     }
   }
+  .iconRow {
+    text-align: right;
+    display: block !important;
+  }
+}
+mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color.ng-star-inserted.deleteIcon:hover {
+  color: red;
+}
+
+mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color.editIcon:hover {
+  color: #4195fc;
+}
+mat-icon.mat-icon.notranslate.personAddIcon.material-icons.mat-icon-no-color.ng-star-inserted.personAddIcon:hover {
+  color: darkgreen;
+}

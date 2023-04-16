@@ -1,14 +1,31 @@
 <mat-grid-list cols="3" rowHeight="2:1" [gutterSize]="'10px'">
+  <div class="editInfo">
+    <mat-icon *ngIf="isEditIcon" (click)="editDataInfo()" class="editIcon">edit</mat-icon>
+  </div>
   <form [formGroup]="dynamicForm">
     <mat-grid-tile *ngFor="let field of dynamicFlds " md-colspan-sm="1" md-colspan-xs="1">
 
-      <mat-form-field appearance="outline" *ngIf="field.type == 'text'">
+      <mat-form-field appearance="outline" *ngIf="field.type == 'text' ||field.type == 'email'||field.type == 'number'">
         <mat-label>{{field.displayName}}</mat-label>
         <input matInput placeholder='please enter {{field.displayName}}' [formControlName]="field.fld_nm"
-          autocomplete="off" (ngModelChange)="checkValue(field.fld_nm,$event)">
+          *ngIf="!(field.type == 'email')" type="{{field.type}}" autocomplete="off"
+          (ngModelChange)="checkValue(field.fld_nm,$event)" minlength="{{field.min_length}}"
+          maxlength="{{field.max_length}}">
+
+        <input matInput placeholder='please enter {{field.displayName}}' [formControlName]="field.fld_nm"
+          *ngIf="field.type == 'email'" type="{{field.type}}" autocomplete="off"
+          (ngModelChange)="checkValue(field.fld_nm,$event)" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$">
+
         <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('required')">{{field.displayName}} is required
         </mat-error>
-        <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('Duplicate')">{{field.displayName}}'s Value is Existing
+        <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('pattern')">{{field.displayName}} is Invalid
+        </mat-error>
+        <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('Duplicate')">{{field.displayName}}'s Value is
+          Existing
+        </mat-error>
+        <mat-error
+          *ngIf="dynamicForm.get(field.fld_nm)?.hasError('minlength') || dynamicForm.get(field.fld_nm)?.hasError('maxlength')">{{field.displayName}}
+          should be 10 digit
         </mat-error>
       </mat-form-field>
 
@@ -31,9 +48,20 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" *ngIf="field.type == 'select'">
+        <mat-label>{{field.displayName}}</mat-label>
         <mat-select matInput placeholder="{{field.displayName}}" [formControlName]="field.fld_nm" autocomplete="off">
           <mat-option> Select </mat-option>
           <mat-option *ngFor="let option of field.options" [value]="option.id">{{ option.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('required')">{{field.displayName}} is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" *ngIf="field.type == 'selectIdValue'">
+        <mat-label>{{field.displayName}}</mat-label>
+        <mat-select matInput placeholder="{{field.displayName}}" [formControlName]="field.fld_nm" autocomplete="off">
+          <mat-option> Select </mat-option>
+          <mat-option *ngFor="let option of field.options" [value]="option">{{ option.name }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('required')">{{field.displayName}} is required
@@ -44,10 +72,16 @@
   </form>
 </mat-grid-list>
 <mat-grid-list cols="2" rowHeight="2:1" [gutterSize]="'10px'">
-  <button *ngIf="buttonToShow.includes('create')" mat-raised-button color="primary" type="submit" (click)="onSubmit()"
+  <button *ngIf="pageAction == 'Create'" mat-raised-button color="primary" type="submit" (click)="onSubmit()"
     class="actionButton">Create</button>
+  <button *ngIf="pageAction == 'Update'" mat-raised-button color="primary" type="submit" (click)="onUpdate()"
+    class="actionButton">Update</button>
+  <button *ngIf="pageAction == 'Delete'" mat-raised-button color="primary" type="submit" (click)="onDelete()"
+    class="actionButton">Yes</button>
+  <button *ngIf="buttonToShow.includes('no')" mat-raised-button color="warn" type="submit"
+    (click)="onclose()">No</button>
   <button *ngIf="buttonToShow.includes('cancel')" mat-raised-button color="warn" type="submit"
-    (click)="onclose()">Cancel</button>
+    (click)="onCancel()">Cancel</button>
   <button *ngIf="buttonToShow.includes('close')" mat-raised-button color="warn" type="submit"
     (click)="onclose()">Close</button>
 </mat-grid-list>

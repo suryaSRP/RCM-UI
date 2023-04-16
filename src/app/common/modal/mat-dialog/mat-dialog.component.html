@@ -4,13 +4,36 @@
       <h1 class="formHeader" mat-dialog-title>{{data.title}}</h1>
     </div>
     <div mat-dialog-content>
-      <app-dynamic-fields [pageName]="selectedPageName" [fldDataArray]="data"
-        (dynamicFormResponse)="getDynamicFormValue($event)" (closeFlag)="onNoClick($event)" [buttonToShow]="showButton"></app-dynamic-fields>
+      <app-dynamic-fields [pageName]="selectedPageName" [fldDataArray]="data" [pageAction]="this.data.pageAction"
+        (dynamicFormResponse)="getDynamicFormValue($event)" (closeFlag)="onNoClick($event)" [buttonToShow]="showButton">
+      </app-dynamic-fields>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="data.showas == 'dialog'">
+  <div>
+    <div class="dialog-title">
+      <h1 class="formHeader" mat-dialog-title>{{data.title}}</h1>
+    </div>
+    <div mat-dialog-content>
+      <mat-grid-list cols="2" rowHeight="2:1" [gutterSize]="'10px'">
+        Kindly Confrim for Deletion
+      </mat-grid-list>
+
+      <mat-grid-list cols="2" rowHeight="2:1" [gutterSize]="'10px'">
+        <button *ngIf="data.pageAction == 'Delete'" mat-raised-button color="primary" type="submit"
+          (click)="onActionSubmit()" class="actionButton">Yes</button>
+        <button *ngIf="data.action.includes('no')" mat-raised-button color="warn" type="submit"
+          (click)="onNoClick(true)">No</button>
+      </mat-grid-list>
+      <!-- <app-dynamic-fields [pageName]="selectedPageName" [fldDataArray]="data" [pageAction]="this.data.pageAction"
+        (dynamicFormResponse)="getDynamicFormValue($event)" (closeFlag)="onNoClick($event)" [buttonToShow]="showButton">
+      </app-dynamic-fields> -->
     </div>
   </div>
 </ng-container>
 
-<div *ngIf="data.showas == 'dialog'">
+<div *ngIf="data.showas == 'dialogBase'">
   <h1 mat-dialog-title>{{data.title}}</h1>
   <div mat-dialog-content>
     <p>What's your favorite animal?</p>

@@ -4,8 +4,15 @@
   text-align: center;
   /* padding: 0px 0px 0px 0px; */
 }
-.actionButton{
+.actionButton {
   margin-left: 2em;
   margin-right: 2em;
   margin-top: 3em;
+}
+.editInfo {
+  color: rgba(0, 0, 0, 0.54);
+  text-align: end;
+  .editIcon{
+    cursor: pointer;
+  }
 }

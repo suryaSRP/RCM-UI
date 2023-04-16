@@ -5,3 +5,116 @@
       padding: 0px 5px 0px 5px;
     }
   }
+.toggle{
+  margin: 0 0 1.5rem;
+  box-sizing: border-box;
+  font-size: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: stretch;
+}
+.toggle input{
+  border-radius: 80px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: -9999px;
+}
+.toggle input + label {
+  margin: 0;
+  padding: 0.75rem 2rem;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  border: solid 1px #ddd;
+  background-color: #fff;
+  // font-size: 1rem;
+  font: 400 14px / 20px Roboto, "Helvetica Neue", sans-serif;
+  line-height: 80%;
+  // font-weight: 200;
+  text-align: center;
+  box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  transition: border-color 0015s ease-out, color 0.25s ease-out, background-color 0.15s ease-out,box-shadow 0.15s ease-out;
+}
+.toggle input + label:first-of-type{
+  border-radius: 26px 0 0 26px;
+  border-right: none;
+}
+.toggle input + label:last-of-type{
+  border-radius:  0 26px 26px 0;
+  border-left: none;
+}
+
+.toggle input:checked + label:first-of-type{
+  border-radius: 26px ;
+  right: -10px;
+  background-color: #3f51b5;
+  color: #fff;
+  border-color: #3f51b5;
+  z-index: 1;
+}
+.toggle input + label:last-of-type{
+  border-radius: 26px ;
+  right: 20px;
+  background-color: #3f51b5;
+  color: #fff;
+  border-color: #3f51b5;
+  z-index: 1;
+}
+// @media(max-width:1200px){
+//   .toggle input+ label{
+//     padding: 0.75rem 0.25rem;
+//     flex: 0 0 50%;
+// display:flex;
+// justify-content: center;
+// align-items: center;
+//   }
+// }
+// @media screen and (min-width:700px) and (max-width:1000px) {
+//   .toggle input:checked + label:last-of-type{
+//     right: 10px;
+//   }
+//   .toggle input:checked + label:first-of-type{
+//     right: -10px;
+//   }
+//   .toggle input + label{
+//     font-size: 14px;
+//   }
+// }
+:host {
+  .mat-slide-toggle {
+    &.mat-checked {
+      ::ng-deep.mat-slide-toggle-bar::after {
+        content: attr();
+        font-size: 45%;
+        font-weight: 700;
+        color: black;
+        position: absolute;
+        left: 4px;
+        top: -5px;
+      }
+    }
+    &:not(.mat-checked) {
+      ::ng-deep.mat-slide-toggle-bar::after {
+        content: attr(data-textafter);
+        font-size: 45%;
+        font-weight: 700;
+        color: white;
+        position: absolute;
+        left: 21px;
+        top: -5px;
+      }
+    }
+  }
+}
+.labelBeforeSlide {
+  vertical-align: top;
+  line-height: 48px;
+  margin-right:0.5rem;
+  margin-bottom:0.5rem;
+}
+mat-slide-toggle {
+  margin: 8px 0;
+  // display: block;
+}

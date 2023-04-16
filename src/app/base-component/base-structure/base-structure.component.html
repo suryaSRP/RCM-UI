@@ -13,7 +13,8 @@
         <mat-accordion class="example-headers-align" multi="false">
           <div [attr.disabled]="true">
             <app-action-items [searchFldFlag]=true [sortFldFlag]=true [addFldFlag]=true [infoFldFlag]=true
-              (sharedVarChange)="searchOn($event,'org')" [placeHolder]="dynamicPlaceHolder"></app-action-items>
+              (sharedVarChange)="searchOn($event,'org',baseDt._id)" [placeHolder]="dynamicPlaceHolder">
+            </app-action-items>
           </div>
           <mat-expansion-panel
             *ngFor="let baseOrg of baseDt.orgInfo | orderBy : 'org_titl_tx': sortOrg | searchFilter : searchOrg ; "
@@ -23,7 +24,12 @@
             <mat-expansion-panel-header (click)="positionDetails(baseOrg.org_unit_id)">
               <mat-panel-title style="max-width: 28em;"> Organisation code: {{baseOrg.org_unit_id}}</mat-panel-title>
               <mat-panel-title style="max-width: 28em;"> Organisation: {{baseOrg.org_titl_tx}}</mat-panel-title>
-              <mat-panel-description style="max-width: 28em;"> Description: {{ baseOrg.org_desc }} </mat-panel-description>
+              <mat-panel-description style="max-width: 28em;"> Description: {{ baseOrg.org_desc }}
+              </mat-panel-description>
+              <mat-panel-description>
+                <!-- <app-action-items [viewToggle]=true (sharedVarChange)="searchOn($event,'org',baseDt._id)">
+                </app-action-items> -->
+              </mat-panel-description>
             </mat-expansion-panel-header>
 
 
@@ -32,28 +38,39 @@
 
                 <div *ngIf="pstnDataArray.length">
                   <app-action-items [searchFldFlag]=true [sortFldFlag]=true [addFldFlag]=true [infoFldFlag]=true
-                    (sharedVarChange)="searchOn($event,'position')">
+                   (sharedVarChange)="searchOn($event,'position',baseOrg._id)">
                   </app-action-items>
                 </div>
 
-                <mat-expansion-panel *ngFor="let pstnData of pstnDataArray| searchFilter : searchPstn;"
+                <mat-expansion-panel
+                  *ngFor="let pstnData of pstnDataArray| orderBy : 'pstn_titl_tx': sortPstn |searchFilter : searchPstn;"
                   (click)="employeeDetails(pstnData.pstn_id)" [expanded]="pstnClickedId === pstnData.pstn_id"
                   (opened)="setStep(pstnData.pstn_id,'position')">
 
                   <mat-expansion-panel-header>
-                    <mat-panel-title> positions: {{pstnData.pstn_titl_tx}}</mat-panel-title>
-                    <mat-panel-description> Description for {{ pstnData.pstn_ds }} </mat-panel-description>
+                    <mat-panel-title class="positionRow"> positions: {{pstnData.pstn_titl_tx}}</mat-panel-title>
+                    <mat-panel-description class="positionRow"> Description for {{ pstnData.pstn_ds }}
+                    </mat-panel-description>
+                    <mat-panel-description class="positionRow iconRow">
+                      <mat-icon *ngIf="!pstnData.isVacant">person
+                      </mat-icon>
+                      <mat-icon (click)="addEmp('employeeMaster',pstnData._id)" *ngIf="pstnData.isVacant"
+                        class="personAddIcon">person_add
+                      </mat-icon>
+                      <mat-icon (click)="infoCompOrgPstnEmp('positionMaster','View Position Information',pstnData._id)"
+                        class="editIcon">edit
+                      </mat-icon>
+                      <mat-icon (click)="deleteData('positionMaster',pstnData._id)" *ngIf="pstnData.isVacant"
+                        class="deleteIcon">delete
+                      </mat-icon>
+                    </mat-panel-description>
                   </mat-expansion-panel-header>
 
                   <ng-template matExpansionPanelContent>
 
-                    <mat-card-content *ngIf="!pstnData.isVacant">
+                    <mat-card-content *ngIf="pstnData.isVacant">
                       "Employee are yet to assign for this Position"
                     </mat-card-content>
-                    <!-- <mat-form-field appearance="fill">
-                      <mat-label>First name</mat-label>
-                      <input matInput>
-                    </mat-form-field> -->
                   </ng-template>
                 </mat-expansion-panel>
 
@@ -61,6 +78,9 @@
             </ng-template>
 
             <mat-card-content *ngIf="pstnDataArray.length == 0">
+              <app-action-items [searchFldFlag]=false [sortFldFlag]=false [addFldFlag]=true [infoFldFlag]=true
+                (sharedVarChange)="searchOn($event,'position',baseOrg._id)">
+              </app-action-items>
               "Positions are not Found for this Organisation"
             </mat-card-content>
           </mat-expansion-panel>
@@ -69,6 +89,10 @@
       </ng-template>
 
       <mat-card-content *ngIf="baseDt.orgInfo.length == 0">
+        <div [attr.disabled]="true">
+          <app-action-items [searchFldFlag]=false [sortFldFlag]=false [addFldFlag]=true [infoFldFlag]=true
+            (sharedVarChange)="searchOn($event,'org',baseDt._id)" [placeHolder]="dynamicPlaceHolder"></app-action-items>
+        </div>
         "Organisation are not Found for this Company"
       </mat-card-content>
     </mat-expansion-panel>

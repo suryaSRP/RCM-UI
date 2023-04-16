@@ -25,6 +25,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     DashboardComponent,
     SearchPipe,
     OrderByPipe,
+
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 
 export interface DialogData {
   action: any;
@@ -10,7 +11,10 @@ export interface DialogData {
   showas: string;
   title: string;
   value: any;
-  validation:{}
+  validation: {};
+  getQuery: {};
+  pageAction: any;
+  formValue:Array<{}>;
 }
 @Component({
   selector: 'app-mat-dialog',
@@ -23,6 +27,7 @@ export class MatDialogComponent implements OnInit {
   public selectedPageName: string = ""
   public showButton: any = []
   constructor(
+    public apiservice: ApiServiceService,
     public dialogRef: MatDialogRef<MatDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) { }
@@ -39,7 +44,7 @@ export class MatDialogComponent implements OnInit {
   }
   getDynamicFormValue(value: any) {
     console.log(value, "getDynamicFormValue_getDynamicFormValue_getDynamicFormValue")
-    if(value.status == "success"){
+    if (value.status == "success") {
       this.dialogRef.close();
       window.location.reload()
     }
@@ -49,5 +54,16 @@ export class MatDialogComponent implements OnInit {
     if (this.dynamicForm.valid) {
       console.log("valid form")
     }
+  }
+  onActionSubmit(): void {
+    this.apiservice.deleteData(this.data.page, this.data.currentData).subscribe(resp => {
+
+      this.dialogRef.close(resp);
+      // if (resp) {
+      //   this.dialogRef.close();
+      //   window.location.reload()
+      // }
+    })
+
   }
 }
