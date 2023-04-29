@@ -52,7 +52,7 @@
                     <mat-panel-description class="positionRow"> Description for {{ pstnData.pstn_ds }}
                     </mat-panel-description>
                     <mat-panel-description class="positionRow iconRow">
-                      <mat-icon *ngIf="!pstnData.isVacant">person
+                      <mat-icon *ngIf="!pstnData.isVacant"(click)="showEmp('employeeMaster','View Employee Information',pstnData.pstn_id)">person
                       </mat-icon>
                       <mat-icon (click)="addEmp('employeeMaster',pstnData._id)" *ngIf="pstnData.isVacant"
                         class="personAddIcon">person_add

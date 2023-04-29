@@ -15,6 +15,7 @@ export class BaseStructureComponent implements OnInit {
   public baseData: Array<any> = []
   public pstnDataArray: Array<any> = [];
   @Input() sharedVarChange: any
+  public empDataArray: Array<any> = [];
   constructor(
     public apiservice: ApiServiceService,
     public dialog: MatDialog
@@ -51,7 +52,7 @@ export class BaseStructureComponent implements OnInit {
     }
   cmpnyCollapse = 0;
   public existingData: any = {
-    cmpny_id: [], org_unit_id: [], pstn_id: []
+    cmpny_id: [], org_unit_id: [], pstn_id: [], ee_id: [], mobile_no: [], email: []
   }
 
   ngOnInit() {
@@ -78,11 +79,13 @@ export class BaseStructureComponent implements OnInit {
     console.log("add employee")
     this.apiservice.fetchFlds(fldForPage, 'Create').subscribe(resp => {
       this.flds = resp
+      this.getEmpDetails(this.orgClickedId)
       const dialogRef = this.dialog.open(MatDialogComponent, {
         width: '750px',
         data: {
           title: "Add Employee", showas: 'form', flds: this.flds, validation: { duplicateCheck: this.existingData },
-          page: fldForPage, action: ["create", "cancel"], currentData: id, pageAction: "Create"
+          page: fldForPage, action: ["create", "cancel"], currentData: { "cmpny_id": this.companyClickedId, "org_unit_id": this.orgClickedId, "pstn_id": this.pstnClickedId },
+          pageAction: "CreateUser"
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -218,12 +221,19 @@ export class BaseStructureComponent implements OnInit {
       this.dataHost(this.companyClickedId, this.orgClickedId, this.pstnClickedId)
     })
   }
+  getEmpDetails(org: any) {
+    this.apiservice.empDtlsBasedOnOrg(this.orgClickedId).subscribe(resp => {
+      console.log(resp, "response")
+      this.empDataArray = resp.data
+      this.dataHost(this.companyClickedId, this.orgClickedId, this.pstnClickedId)
+    })
+  }
 
   employeeDetails(pstnId: any) {
 
   }
 
-  dataHost(coId: any, OrgID?: any, PstnID?: any) {
+  dataHost(coId: any, OrgID?: any, PstnID?: any, empId?: any) {
     this.baseData.forEach(dt => {
       if (coId) {
         if (dt.cmpny_id == coId) {
@@ -234,6 +244,20 @@ export class BaseStructureComponent implements OnInit {
             this.pstnDataArray.forEach((pstnDt: any) => {
               if (pstnDt.org_unit_id == OrgID) {
                 this.existingData.pstn_id.push(pstnDt.pstn_id)
+              }
+            });
+          }
+          if (PstnID) {
+            this.empDataArray.forEach((empDt: any, ind: any, array: any) => {
+              console.log(empDt, "empDTTTTTTTTTTT", empDt.ee_id)
+              console.log(empDt.org_unit_id == OrgID, "empDt.org_unit_id == OrgID")
+              if (empDt.org_unit_id == OrgID) {
+                if (ind == array.length - 1) {
+                  this.existingData.ee_id.push(empDt.ee_id)
+                  this.existingData.mobile_no.push(empDt.mobile_no)
+                  this.existingData.email.push(empDt.email)
+                  console.log(this.existingData, "this.existingDatathis.existingData")
+                }
               }
             });
           }
@@ -265,5 +289,24 @@ export class BaseStructureComponent implements OnInit {
     })
   }
   editData(fldForPage: any, id: any) { }
-
+  showEmp(fldForPage: any, title: string, fetchValueOf: any){
+    this.apiservice.fetchFlds(fldForPage, 'edit').subscribe(resp => {
+      if (resp) {
+        let currentData: any
+        if (fldForPage == "positionMaster") {
+          currentData = { "_id": fetchValueOf }
+        }
+        this.apiservice.getValueId(fldForPage, fetchValueOf).subscribe(dataResp => {
+          this.flds = resp
+          const dialogRef = this.dialog.open(MatDialogComponent, {
+            width: '750px',
+            data: {
+              title: title, showas: 'form', flds: this.flds, formValue: dataResp.data,
+              page: fldForPage, action: ["close"], currentData: currentData, pageAction: "Information"
+            }
+          });
+        })
+      }
+    })
+  }
 }

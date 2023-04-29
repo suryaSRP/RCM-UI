@@ -8,19 +8,24 @@
       <mat-form-field appearance="outline" *ngIf="field.type == 'text' ||field.type == 'email'||field.type == 'number'">
         <mat-label>{{field.displayName}}</mat-label>
         <input matInput placeholder='please enter {{field.displayName}}' [formControlName]="field.fld_nm"
-          *ngIf="!(field.type == 'email')" type="{{field.type}}" autocomplete="off"
+          *ngIf="field.type == 'text'" type="{{field.type}}" autocomplete="off"
           (ngModelChange)="checkValue(field.fld_nm,$event)" minlength="{{field.min_length}}"
-          maxlength="{{field.max_length}}">
+          maxlength="{{field.max_length}}" [disabled]="true">
+        <input matInput placeholder='please enter {{field.displayName}}' [formControlName]="field.fld_nm"
+          *ngIf="field.type == 'number'" type="number" autocomplete="off"
+          (ngModelChange)="checkValue(field.fld_nm,$event)" minlength="{{field.min_length}}"
+          maxlength="{{field.max_length}}" [readonly]="field.isDisabled">
 
         <input matInput placeholder='please enter {{field.displayName}}' [formControlName]="field.fld_nm"
           *ngIf="field.type == 'email'" type="{{field.type}}" autocomplete="off"
-          (ngModelChange)="checkValue(field.fld_nm,$event)" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$">
+          (ngModelChange)="checkValue(field.fld_nm,$event)" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+          [readonly]="field.isDisabled">
 
         <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('required')">{{field.displayName}} is required
         </mat-error>
         <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('pattern')">{{field.displayName}} is Invalid
         </mat-error>
-        <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('Duplicate')">{{field.displayName}}'s Value is
+        <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('Duplicate')">{{field.displayName}}'s is already
           Existing
         </mat-error>
         <mat-error
@@ -59,9 +64,10 @@
       </mat-form-field>
       <mat-form-field appearance="outline" *ngIf="field.type == 'selectIdValue'">
         <mat-label>{{field.displayName}}</mat-label>
-        <mat-select matInput placeholder="{{field.displayName}}" [formControlName]="field.fld_nm" autocomplete="off">
+        <mat-select matInput placeholder="{{field.displayName}}" [formControlName]="field.fld_nm" autocomplete="off"
+          (ngModelChange)="autoTrigger($event,field)">
           <mat-option> Select </mat-option>
-          <mat-option *ngFor="let option of field.options" [value]="option">{{ option.name }}
+          <mat-option *ngFor="let option of field.options" [value]="option.id">{{ option.name }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('required')">{{field.displayName}} is required
@@ -74,6 +80,8 @@
 <mat-grid-list cols="2" rowHeight="2:1" [gutterSize]="'10px'">
   <button *ngIf="pageAction == 'Create'" mat-raised-button color="primary" type="submit" (click)="onSubmit()"
     class="actionButton">Create</button>
+    <button *ngIf="pageAction == 'CreateUser'" mat-raised-button color="primary" type="submit" (click)="onCreateUser()"
+      class="actionButton">Create</button>
   <button *ngIf="pageAction == 'Update'" mat-raised-button color="primary" type="submit" (click)="onUpdate()"
     class="actionButton">Update</button>
   <button *ngIf="pageAction == 'Delete'" mat-raised-button color="primary" type="submit" (click)="onDelete()"

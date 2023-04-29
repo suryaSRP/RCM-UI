@@ -23,6 +23,10 @@ export class ApiServiceService {
     console.log("cmpany services hitted")
     return this.httpClient.get(`${this.API_URL}/api/pstnDtls/${orgId}`, { headers: this.headers })
   }
+  empDtlsBasedOnOrg(orgId: any): Observable<any> {
+    console.log("cmpany services hitted")
+    return this.httpClient.get(`${this.API_URL}/api/empDtls/${orgId}`, { headers: this.headers })
+  }
 
   handleError(error: HttpErrorResponse) {
     let msg = '';
@@ -53,5 +57,19 @@ export class ApiServiceService {
   }
   deleteData(collectionName: any, dataID: any): Observable<any> {
     return this.httpClient.post(`${this.API_URL}/api/deleteData/${collectionName}/${dataID}`, "", { headers: this.headers })
+  }
+  getDetails(pageInfo: any): Observable<any> {
+    console.log("getDetails pageInfo services hitted")
+    return this.httpClient.get(`${this.API_URL}/api/getDetails/formData/${pageInfo}`, { headers: this.headers })
+  }
+  getDetailsBasedOnId(pageInfo: any,id:any): Observable<any> {
+    console.log("getDetails pageInfo services hitted")
+    return this.httpClient.get(`${this.API_URL}/api/getDetailsBasedOnId/formData/${pageInfo}/${id}`, { headers: this.headers })
+  }
+  //User Operation
+
+  createUser(pageInfo: any, formValue: any): Observable<any> {
+    console.log("fetchFlds pageInfo services hitted")
+    return this.httpClient.post(`${this.API_URL}/api/user/addUser`, formValue, { headers: this.headers })
   }
 }
