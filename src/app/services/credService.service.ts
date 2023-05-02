@@ -14,7 +14,7 @@ import { User } from '../user';
 
 export class credService {
   API_URL: string = 'http://localhost:8081';
-  headers = new HttpHeaders({'Content-Type':'application/json',"clientsid":`${localStorage.getItem("clientCd")}`})
+  headers = new HttpHeaders({ 'Content-Type': 'application/json', "clientsid": `${localStorage.getItem("clientCd")}` })
   currentUser = {};
 
   constructor(private httpClient: HttpClient,
@@ -38,12 +38,16 @@ export class credService {
     return this.httpClient.post<any>(`${this.API_URL}/api/auth/signin`, user)
       .subscribe((res: any) => {
         let loginResult = res.result
-        localStorage.setItem('access_token', loginResult.token?loginResult.token:loginResult.accessToken)
-        localStorage.setItem("userLoggedIn",loginResult.email)
-        localStorage.setItem("role",loginResult.roles)
-        sessionStorage.setItem("isUserLoggedIn","true")
+        localStorage.setItem('access_token', loginResult.token ? loginResult.token : loginResult.accessToken)
+        localStorage.setItem("userLoggedIn", loginResult.email)
+        localStorage.setItem("role", loginResult.roles)
+        sessionStorage.setItem("isUserLoggedIn", "true")
+        sessionStorage.setItem("username", loginResult.username)
+        localStorage.setItem("username", loginResult.username)
+        localStorage.setItem("ee_id", loginResult.ee_id)
+        sessionStorage.setItem("ee_id", loginResult.ee_id)
         var clientname = localStorage.getItem("clientCd")
-        console.log(`/${clientname}/dboard`,"routessssssssssss")
+        console.log(`/${clientname}/dboard`, "routessssssssssss")
         // this.getUserProfile(res._id).subscribe((res) => {
         //   this.currentUser = res;
         //   console.log(this.currentUser, "this.currentUserthis.currentUserthis.currentUser")
@@ -67,7 +71,7 @@ export class credService {
     console.log(localStorage.getItem("clientCd"), "this.route.snapshot.paramMap")
     var clientLogged = localStorage.getItem("clientCd")
     if (localStorage.removeItem('access_token') == null) {
-      sessionStorage.setItem("isUserLoggedIn","false")
+      sessionStorage.setItem("isUserLoggedIn", "false")
       this.router.navigate([`${clientLogged}/login`]);
     }
   }

@@ -1,0 +1,16 @@
+<app-base-component></app-base-component>
+<div class="employeeManagementClass">
+  <!-- <div class="pageHeader">
+    <h1 class="headerData">Employee Management</h1>
+  </div> -->
+  <app-table [dataSource]="sourceDataArray[0].workFlowDataSource" [rowActions]="sourceDataArray[0].rowActions"
+  [columns]="sourceDataArray[0].workFlowTableColumns" [allColumnsSortable]="true" #workFlowTable
+  [tableOptions]="sourceDataArray[0].tableOptions" (pageChanged)="pageChangedEvent($event)"
+  [tableTitle]="sourceDataArray[0].tableTitle" [totalCount]="sourceDataArray[0].totalCount"
+  ></app-table>
+<div class="example-button-container">
+  <button mat-fab color="accent" aria-label="Example icon button with a bookmark icon" class="addButton">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+</div>

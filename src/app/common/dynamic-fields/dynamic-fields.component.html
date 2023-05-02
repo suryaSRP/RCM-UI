@@ -82,6 +82,8 @@
     class="actionButton">Create</button>
     <button *ngIf="pageAction == 'CreateUser'" mat-raised-button color="primary" type="submit" (click)="onCreateUser()"
       class="actionButton">Create</button>
+      <button *ngIf="pageAction == 'CreateEvent'" mat-raised-button color="primary" type="submit" (click)="onCreateEvent()"
+      class="actionButton">Create Event</button>
   <button *ngIf="pageAction == 'Update'" mat-raised-button color="primary" type="submit" (click)="onUpdate()"
     class="actionButton">Update</button>
   <button *ngIf="pageAction == 'Delete'" mat-raised-button color="primary" type="submit" (click)="onDelete()"

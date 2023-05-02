@@ -8,7 +8,7 @@
                   <span class="logo_name">CodingLab</span>
               </div> -->
         <ul class="nav-links">
-          <li>
+          <li *ngIf="loggedInRole == 1">
             <a href="#">
               <i class="bx bx-grid-alt"></i>
               <span class="link_name">Base To</span>
@@ -17,21 +17,32 @@
               <li><a class="link_name" (click)="toBase()">Company</a></li>
             </ul>
           </li>
-          <li>
+          <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
+            <i class="bx bx-food-menu"></i>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" (click)="navigateTo('empDetails')">Employee Management</a></li>
+            </ul>
+          </li>
+          <li *ngIf="loggedInRole == 8 || loggedInRole == 1 || loggedInRole == 9">
             <div class="iocn-link">
-              <a href="#">
-                <i class="bx bx-collection"></i>
-                <span class="link_name">Base To</span>
-              </a>
+              <i class="bx bx-tab"></i>
               <i class="bx bxs-chevron-down arrow"></i>
             </div>
             <ul class="sub-menu">
-              <li><a class="link_name" href="#">Category</a></li>
-              <li><a href="#">HTML & CSS</a></li>
-              <li><a href="#">JavaScript</a></li>
-              <li><a href="#">PHP & MySQL</a></li>
+              <li><a class="link_name" (click)="navigateTo('schedule')">Today Schedules</a></li>
+              <li><a (click)="navigateTo('approvals')">My Approvals</a></li>
             </ul>
           </li>
+          <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
+            <div class="iocn-link">
+              <i class="bx bx-tab"></i>
+              <i class="bx bxs-chevron-down arrow"></i>
+            </div>
+            <ul class="sub-menu">
+              <li><a class="link_name" (click)="navigateTo('schedule')">Report</a></li>
+            </ul>
+          </li>
+
         </ul>
       </div>
     </div>
@@ -59,13 +70,14 @@
 
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>Ambu </span>
+    <span>WinZoneCloud </span>
     <span *ngIf="ClientName" style="padding-left: 10px;"><span> | </span><span></span>
       {{ClientName}} </span>
     <span class="spacer"></span>
+    <span>{{userName}}</span>
     <span><a mat-button routerLink="/contactus" class="headerIcon" title="Notification">
-      <i class="fa fa-bell"></i>
-    </a></span>
+        <i class="fa fa-bell"></i>
+      </a></span>
     <span><a mat-button routerLink="/contactus" class="headerIcon" title="Contact us">
         <i class="fa fa-question-circle fa-2xl" aria-hidden="true"></i>
       </a></span>

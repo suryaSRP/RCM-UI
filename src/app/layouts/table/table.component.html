@@ -1,0 +1,141 @@
+<!-- <div class="table-container"> -->
+<!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 tableComp">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Dessert (100g)</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="calories">
+      <th mat-header-cell *matHeaderCellDef>Calories</th>
+      <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
+    </ng-container>
+    <ng-container matColumnDef="fat">
+      <th mat-header-cell *matHeaderCellDef>Fat (g)</th>
+      <td mat-cell *matCellDef="let element"> {{element.fat}} </td>
+    </ng-container>
+    <ng-container matColumnDef="carbs">
+      <th mat-header-cell *matHeaderCellDef>Carbs (g)</th>
+      <td mat-cell *matCellDef="let element"> {{element.carbs}} </td>
+    </ng-container>
+    <ng-container matColumnDef="protein">
+      <th mat-header-cell *matHeaderCellDef>Protein (g)</th>
+      <td mat-cell *matCellDef="let element"> {{element.protein}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table> -->
+<!-- </div> -->
+<div class="table-container">
+
+  <div class="table-header-container"
+    *ngIf="(dataSource.data.length && dataSource.filteredData.length) && (tableTitle || options.enableTableFilter || (options.enableTablePagination && dataSource.data.length > 0))">
+    <!-- table title -->
+    <div *ngIf="tableTitle && tableTitle !==''" class="table-title-container">
+      <label class="table-title">{{ tableTitle  }}</label>
+    </div>
+    <!-- table filter(search)-->
+    <!-- <div *ngIf="options.enableTableFilter">
+      <app-input label="{{filterInputLabel}}" placeholder="{{filterInputPlaceholder}}" (output)="onTableFilter($event)"
+        [icon]="'search'" [keyup]="true"></app-input>
+    </div> -->
+    <!-- <div  *ngIf="options.enableTableActionFilter">
+      <app-page-header-action [formData]="headerActionFormData" (formDataSubmit)="submitHeaderData($event)"
+        (onFilterChange)="onFilterChange($event)"></app-page-header-action>
+    </div> -->
+    <!-- column setting -->
+    <!-- <div *ngIf="options.enableColumnSetting" class="settings">
+      <button mat-button class="trans settings--filter" (click)="openColumnSettings()">
+        <mat-icon svgIcon="gear"></mat-icon>
+        {{ "index.column_setting"  }}
+      </button>
+    </div> -->
+    <!-- pagination -->
+    <div class="table-pagination-container" *ngIf="options.enableTablePagination && dataSource.data.length > 0">
+      <mat-paginator *ngIf="!totalCount" [pageSize]="options.defaultPageSize"
+        [pageSizeOptions]="options.pageSizeOptions" (page)="pageChange($event)"></mat-paginator>
+      <mat-paginator *ngIf="totalCount" [length]="totalCount" [pageSize]="options.defaultPageSize"
+        [pageSizeOptions]="options.pageSizeOptions" (page)="pageChange($event)"></mat-paginator>
+    </div>
+  </div> <!-- end of table heaer-->
+
+  <div class="table-area-container">
+    <table *ngIf="(dataSource.data.length && dataSource.filteredData.length); else noData" mat-table
+      [dataSource]="dataSource" cdkDropList cdkDropListOrientation="horizontal" matSort matTableExporter
+     >
+
+      <!-- <ng-container *ngIf="options.enableCheckBoxSelection && dataSource.data.length > 0" matColumnDef="select" sticky>
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle($event.checked) : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+            (change)="$event ? [selection.toggle(row), onRowCheckBoxChanged(row, $event.checked)] : null"
+            [checked]="row?.isSelected??selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container> -->
+
+      <ng-container *ngIf="options.enableRadioSelection && dataSource.data.length >= 0" matColumnDef="select" sticky>
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <mat-radio-button (click)="$event.stopPropagation()"
+            (change)="$event ? [selection.toggle(row),onRowRadioBoxChanged(row)] : null"
+            [checked]="row?.isSelected??selection.isSelected(row)"></mat-radio-button>
+        </td>
+      </ng-container>
+
+
+      <ng-container *ngFor="let item of columns" matColumnDef="{{item.columnDef}}">
+        <div *ngIf="item.enableSorting">
+          <th mat-header-cell cdkDrag *matHeaderCellDef mat-sort-header [hidden]="item.hidden"
+            matTooltipClass="table-tooltip" [matTooltip]="item.header ">{{item.header }}</th>
+        </div>
+        <div *ngIf="!item.enableSorting">
+          <th mat-header-cell cdkDrag *matHeaderCellDef [hidden]="item.hidden" matTooltipClass="table-tooltip"
+            [matTooltip]="item.header">{{item.header }}</th>
+        </div>
+        <td mat-cell *matCellDef="let element" [hidden]="item.hidden" matTooltipClass="table-tooltip"
+          [matTooltip]="element[item.columnDef] ">
+          {{ element[item.columnDef] }}
+        </td>
+      </ng-container>
+
+      <ng-container *ngFor="let rowAction of rowActions; let i= index;" matColumnDef="action-{{i}}">
+        <th mat-header-cell *matHeaderCellDef>{{rowAction.headerName }}</th>
+        <td mat-cell *matCellDef="let row; let i = index">
+          <div class="table-row-button-container">
+            <div *ngFor="let item of rowAction.rowActions" (click)="onRowActionClicked(item, row, i)">
+              <div *ngIf="item.type === 'button'">
+                <button mat-button class="{{item.btnClass ? item.btnClass : 'table-default'}}">{{item.label  }}
+                  <mat-icon *ngIf="item.matIconName">{{item.matIconName}}</mat-icon>
+                  <img *ngIf="item.iconPath" [src]="item.iconPath" class="image-icon" alt="" />
+                </button>
+              </div>
+              <div *ngIf="item.type === 'link'">
+                <a class="{{item.btnClass ? item.btnClass : 'table-row-button-link'}}">{{item.label }}
+                  <mat-icon *ngIf="item.matIconName">{{item.matIconName}}</mat-icon>
+                  <img *ngIf="item.iconPath" [src]="item.iconPath" class="image-icon" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"
+        (click)="tableOptions.clickToAction === true ? onRowClicked(row) : null"></tr>
+
+      <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
+
+    </table>
+    <ng-template #noData>
+      <div class="no-data-text">
+        {{options.emptyOptionsText || "GENRAL.NO_DATA_AVAILABLE" }}
+      </div>
+    </ng-template>
+  </div>
+
+</div>

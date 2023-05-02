@@ -48,7 +48,7 @@ export class ApiServiceService {
     console.log("fetchFlds pageInfo services hitted")
     return this.httpClient.post(`${this.API_URL}/api/${pageInfo}/create`, formValue, { headers: this.headers })
   }
-  updateOrgPstn(pageInfo: any, formValue: any,id:any): Observable<any> {
+  updateOrgPstn(pageInfo: any, formValue: any, id: any): Observable<any> {
     console.log("fetchFlds pageInfo updateOrgPstn-services hitted")
     return this.httpClient.post(`${this.API_URL}/api/${pageInfo}/update/${id._id}`, formValue, { headers: this.headers })
   }
@@ -62,7 +62,7 @@ export class ApiServiceService {
     console.log("getDetails pageInfo services hitted")
     return this.httpClient.get(`${this.API_URL}/api/getDetails/formData/${pageInfo}`, { headers: this.headers })
   }
-  getDetailsBasedOnId(pageInfo: any,id:any): Observable<any> {
+  getDetailsBasedOnId(pageInfo: any, id: any): Observable<any> {
     console.log("getDetails pageInfo services hitted")
     return this.httpClient.get(`${this.API_URL}/api/getDetailsBasedOnId/formData/${pageInfo}/${id}`, { headers: this.headers })
   }
@@ -71,5 +71,21 @@ export class ApiServiceService {
   createUser(pageInfo: any, formValue: any): Observable<any> {
     console.log("fetchFlds pageInfo services hitted")
     return this.httpClient.post(`${this.API_URL}/api/user/addUser`, formValue, { headers: this.headers })
+  }
+
+
+  getUserList( prsnDts: any): Observable<any> {
+    console.log("fetchFlds pageInfo services hitted")
+    return this.httpClient.post(`${this.API_URL}/api/getEmpDetails`, prsnDts, { headers: this.headers })
+  }
+
+  getEventList( prsnDts: any): Observable<any> {
+    console.log("fetchFlds pageInfo services hitted")
+    let id = localStorage.getItem('ee_id')
+    return this.httpClient.post(`${this.API_URL}/api/getEventDetails/${id}`, prsnDts, { headers: this.headers })
+  }
+  createEvent(pageInfo: any, formValue: any): Observable<any> {
+    console.log("fetchFlds pageInfo services hitted")
+    return this.httpClient.post(`${this.API_URL}/api/user/addEvent`, formValue, { headers: this.headers })
   }
 }

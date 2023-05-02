@@ -89,6 +89,19 @@ export class DynamicFieldsComponent implements OnInit {
       // return
     }
   }
+  onCreateEvent(): void {
+    if (this.dynamicForm.valid) {
+      let data = {"status" : "initated","otpGenerated" : true,'assignTo':localStorage.getItem('ee_id')}
+      let finalData = { ...this.dynamicForm.value, ...data }
+      console.log(finalData, "onCreateEvent_onCreateEvent_onCreateEvent")
+      this.apiService.createEvent(this.fldDataArray.page, finalData).subscribe(resp => {
+        console.log(resp, "resp_on_create")
+        this.dynamicFormResponse.emit(resp)
+      })
+    } else {
+      // return
+    }
+  }
   onUpdate(): void {
     if (this.dynamicForm.valid) {
       let finalData = { ...this.dynamicForm.value }
