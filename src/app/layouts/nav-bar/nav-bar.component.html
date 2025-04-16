@@ -1,29 +1,47 @@
 <div class="row">
-  <!-- <div class="row headerTab">herders</div> -->
   <div class="row">
     <div class="col-1" style="width: 5.4%;">
       <div class="sidebar close">
-        <!-- <div class="logo-details">
-                  <i class="bx bxl-c-plus-plus"></i>
-                  <span class="logo_name">CodingLab</span>
-              </div> -->
+        <ul class="nav-links topLinks">
+          <li >
+            <span (click)="toDashboard()">
+              <i class="fa fa-apple" aria-hidden="true"></i>
+            </span>
+          </li> 
+          </ul>
         <ul class="nav-links">
-          <li *ngIf="loggedInRole == 1">
-            <a href="#">
-              <i class="bx bx-grid-alt"></i>
-              <span class="link_name">Base To</span>
-            </a>
+          <!-- <li *ngIf="loggedInRole == 1">
+              <i class="bx bx-grid-alt" (click)="toBase()"></i>
+              <span class="link_name" >Base To</span>
             <ul class="sub-menu blank">
               <li><a class="link_name" (click)="toBase()">Company</a></li>
             </ul>
+          </li> -->
+          <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
+            <i class="bx bx-grid-alt"  (click)="toBase()"></i>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" (click)="toBase()">company</a></li>
+            </ul>
           </li>
           <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
+            <i class="bx bx-food-menu"  (click)="toInventory()"></i>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" (click)="toInventory()">Inventory</a></li>
+            </ul>
+          </li>
+          <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
+            <i class="bx bx-food-menu" (click)="toBillRequest()"></i>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" (click)="toBillRequest()">Bill Request</a></li>
+            </ul>
+          </li>
+          <!-- <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
             <i class="bx bx-food-menu"></i>
             <ul class="sub-menu blank">
               <li><a class="link_name" (click)="navigateTo('empDetails')">Employee Management</a></li>
             </ul>
-          </li>
-          <li *ngIf="loggedInRole == 8 || loggedInRole == 1 || loggedInRole == 9">
+          </li> -->
+          <!-- <li *ngIf="loggedInRole == 8 || loggedInRole == 1 || loggedInRole == 9">
             <div class="iocn-link">
               <i class="bx bx-tab"></i>
               <i class="bx bxs-chevron-down arrow"></i>
@@ -32,8 +50,8 @@
               <li><a class="link_name" (click)="navigateTo('schedule')">Today Schedules</a></li>
               <li><a (click)="navigateTo('approvals')">My Approvals</a></li>
             </ul>
-          </li>
-          <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
+          </li> -->
+          <!-- <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
             <div class="iocn-link">
               <i class="bx bx-tab"></i>
               <i class="bx bxs-chevron-down arrow"></i>
@@ -42,6 +60,15 @@
               <li><a class="link_name" (click)="navigateTo('schedule')">Report</a></li>
             </ul>
           </li>
+          <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
+            <div class="iocn-link">
+              <i class="bx bx-tab"></i>
+              <i class="bx bxs-chevron-down arrow"></i>
+            </div>
+            <ul class="sub-menu">
+              <li><a class="link_name" (click)="navigateTo('schedule')">Inventory</a></li>
+            </ul>
+          </li> -->
 
         </ul>
       </div>
@@ -51,7 +78,7 @@
     </div>
   </div>
 </div>
-
+<div class="row"><router-outlet></router-outlet></div>
 <script>
   let arrow = document.querySelectorAll(".arrow");
   for (var i = 0; i < arrow.length; i++) {
@@ -67,22 +94,32 @@
     sidebar.classList.toggle("close");
   });
 </script>
-
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>WinZoneCloud </span>
-    <span *ngIf="ClientName" style="padding-left: 10px;"><span> | </span><span></span>
+<mat-toolbar>
+  <mat-toolbar-row style="padding-left: 15px;">
+    <span (click)="toDashboard()">
+      <i class="fa fa-apple" aria-hidden="true"></i>
+    </span>
+    <span *ngIf="ClientName" style="padding-left: 10px;font-size: 14px;"><span> | </span><span></span>
       {{ClientName}} </span>
     <span class="spacer"></span>
     <span>{{userName}}</span>
-    <span><a mat-button routerLink="/contactus" class="headerIcon" title="Notification">
-        <i class="fa fa-bell"></i>
-      </a></span>
-    <span><a mat-button routerLink="/contactus" class="headerIcon" title="Contact us">
-        <i class="fa fa-question-circle fa-2xl" aria-hidden="true"></i>
-      </a></span>
-    <span *ngIf="userLoggedin" (click)="logout()" class="headerIcon" title="Logout"><i class="fa fa-sign-out fa-2xl"
-        aria-hidden="true"></i></span>
+    <span *ngIf="userLoggedin" (click)="showNotification()" class="headerIcon" title="Notification">
+      <i class="fa fa-bell" aria-hidden="true" style="color: rgba(0, 0, 0, .8);font-size: 14px;"></i>
+    </span>
+    <span *ngIf="userLoggedin" (click)="contactUs()" class="headerIcon" title="contact us">
+      <i class="fa fa-question-circle" aria-hidden="true" style="color: rgba(0, 0, 0, .8);font-size: 16px;"></i>
+    </span>
+    <span *ngIf="userLoggedin" (click)="logout()" class="headerIcon" title="Logout">
+      <i class="fa fa-sign-out" aria-hidden="true" style="color: rgba(0, 0, 0, .8);font-size: 18px;"></i>
+    </span>
   </mat-toolbar-row>
 </mat-toolbar>
+<!-- <nav mat-tab-nav-bar >
+  <a mat-tab-link  (click)="toBase()" title="company"
+  >
+     <i class="fa fa-users"></i> 
+    </a>
+  <a mat-tab-link (click)="toInventory()">  <i class="fa fa fa-tasks" aria-hidden="true" ></i> </a>
+  <a  mat-tab-link (click)="toBillRequest()"> <i class="fa fa-pencil-square-o" aria-hidden="true" ></i> </a>
+</nav> -->
 <router-outlet></router-outlet>

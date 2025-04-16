@@ -65,8 +65,8 @@ a.hover:hover {
   box-shadow: 2px 3px 4px 3px #888888;
 }
 .customCard {
-  margin-left: 5%;
   height: 90%;
+  margin-left: calc(100% - 94%)
 }
 .disable_ripple:hover {
   // background: currentColor !important;

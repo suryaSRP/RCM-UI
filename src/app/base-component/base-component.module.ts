@@ -22,6 +22,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { InventoryComponent } from './inventory/inventory.component';
+import { BillGeneratorComponent } from './bill-generator/bill-generator.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     OrderByPipe,
     EmployeeManagementComponent,
     EventManagementComponent,
-    TableComponent
+    TableComponent,
+    InventoryComponent,
+    BillGeneratorComponent
   ],
   imports: [
     CommonModule,

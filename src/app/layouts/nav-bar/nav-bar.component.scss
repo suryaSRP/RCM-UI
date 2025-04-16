@@ -1,18 +1,44 @@
 /* Google Fonts Import Link */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 .spacer {
-  flex: 1 1 auto;
+    flex: 1 1 auto;
 }
-.headerIcon{
-  font-size: 30px;
-  padding: 0px 10px 0px 5px;
-  color: white;
-  cursor: pointer;
+
+.headerIcon {
+    //   font-size: 30px;
+    padding: 0px 10px 0px 5px;
+    //   color: white;
+    cursor: pointer;
+    min-width: 35px;
+    color: rgba(0, 0, 0, .8);
+    font-size: 0.625em;
+    text-align: center;
 }
+
+.mat-toolbar.mat-primary {
+    background: rgba(245, 245, 247, .8);
+    color: rgba(0, 0, 0, .8);
+}
+.subHeaderMenu {
+    background: rgb(255 255 255 / 84%);
+    height: calc(100% - 75px);
+    font-size: 14px;
+}
+.subHeaderIcon {
+    padding: 0px 10px 0px 5px;
+    cursor: pointer;
+    min-width: 50px;
+    color: rgba(0, 0, 0, .8);
+    text-align: center;
+    font-size: 24px;
+}
+
 .mat-button.mat-primary .mat-button-focus-overlay {
-  background-color: transparent;
+    background-color: transparent;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -29,8 +55,7 @@
     background: #11101d;
     z-index: 100;
     transition: all 0.5s ease;
-    margin-top: 4%;
-    background: #3f51b5;
+    background: #f5f5f5;
 }
 
 .sidebar.close {
@@ -72,6 +97,11 @@
     padding: 30px 0 150px 0;
     overflow: auto;
 }
+.sidebar .topLinks {
+    height: 0%;
+    padding: 10px 0px 30px 0px;
+    // overflow: auto;
+}
 
 .sidebar.close .nav-links {
     overflow: visible;
@@ -106,7 +136,7 @@
     min-width: 78px;
     text-align: center;
     line-height: 50px;
-    color: #fff;
+    color: #080606;
     font-size: 20px;
     cursor: pointer;
     transition: all 0.3s ease;

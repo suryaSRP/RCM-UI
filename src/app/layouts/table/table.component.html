@@ -27,11 +27,25 @@
 <div class="table-container">
 
   <div class="table-header-container"
-    *ngIf="(dataSource.data.length && dataSource.filteredData.length) && (tableTitle || options.enableTableFilter || (options.enableTablePagination && dataSource.data.length > 0))">
+    *ngIf="(dataSource?.data?.length) && (tableTitle || options?.enableTableFilter || (options?.enableTablePagination && dataSource.data.length > 0))">
     <!-- table title -->
     <div *ngIf="tableTitle && tableTitle !==''" class="table-title-container">
-      <label class="table-title">{{ tableTitle  }}</label>
+      <div class="row">
+        <div class="col-6">
+          <label class="table-title">{{ tableTitle  }}</label>
+        </div>
+<div class="col-6" style="text-align: end;">
+  <button mat-button class="trans settings--filter" (click)="openColumnSettings()">
+    <mat-icon svgIcon="plus" style="height: 15px;
+    margin: 0 0 23px 0px;"></mat-icon>
+    {{ "Product"  }}
+  </button>
+</div>
+      </div>
     </div>
+    <!-- <button mat-raised-button class="classicBtn">
+      <mat-icon>add</mat-icon>Product
+  </button> -->
     <!-- table filter(search)-->
     <!-- <div *ngIf="options.enableTableFilter">
       <app-input label="{{filterInputLabel}}" placeholder="{{filterInputPlaceholder}}" (output)="onTableFilter($event)"
@@ -42,14 +56,14 @@
         (onFilterChange)="onFilterChange($event)"></app-page-header-action>
     </div> -->
     <!-- column setting -->
-    <!-- <div *ngIf="options.enableColumnSetting" class="settings">
+    <!-- <div *ngIf="options?.enableColumnSetting" class="settings">
       <button mat-button class="trans settings--filter" (click)="openColumnSettings()">
         <mat-icon svgIcon="gear"></mat-icon>
-        {{ "index.column_setting"  }}
+        {{ "column Setting"  }}
       </button>
     </div> -->
     <!-- pagination -->
-    <div class="table-pagination-container" *ngIf="options.enableTablePagination && dataSource.data.length > 0">
+    <div class="table-pagination-container" *ngIf="options?.enableTablePagination && dataSource.data.length > 0">
       <mat-paginator *ngIf="!totalCount" [pageSize]="options.defaultPageSize"
         [pageSizeOptions]="options.pageSizeOptions" (page)="pageChange($event)"></mat-paginator>
       <mat-paginator *ngIf="totalCount" [length]="totalCount" [pageSize]="options.defaultPageSize"
@@ -58,7 +72,7 @@
   </div> <!-- end of table heaer-->
 
   <div class="table-area-container">
-    <table *ngIf="(dataSource.data.length && dataSource.filteredData.length); else noData" mat-table
+    <table *ngIf="(dataSource?.data?.length && dataSource?.filteredData?.length); else noData" mat-table
       [dataSource]="dataSource" cdkDropList cdkDropListOrientation="horizontal" matSort matTableExporter
      >
 
@@ -77,7 +91,7 @@
         </td>
       </ng-container> -->
 
-      <ng-container *ngIf="options.enableRadioSelection && dataSource.data.length >= 0" matColumnDef="select" sticky>
+      <ng-container *ngIf="options?.enableRadioSelection && dataSource.data.length >= 0" matColumnDef="select" sticky>
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <mat-radio-button (click)="$event.stopPropagation()"
@@ -88,6 +102,7 @@
 
 
       <ng-container *ngFor="let item of columns" matColumnDef="{{item.columnDef}}">
+        {{item.columnDef}}
         <div *ngIf="item.enableSorting">
           <th mat-header-cell cdkDrag *matHeaderCellDef mat-sort-header [hidden]="item.hidden"
             matTooltipClass="table-tooltip" [matTooltip]="item.header ">{{item.header }}</th>
@@ -131,7 +146,9 @@
       <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
 
     </table>
+    
     <ng-template #noData>
+      
       <div class="no-data-text">
         {{options.emptyOptionsText || "GENRAL.NO_DATA_AVAILABLE" }}
       </div>

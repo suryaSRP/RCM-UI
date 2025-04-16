@@ -15,7 +15,7 @@
     <div class="dialog-title">
       <h1 class="formHeader" mat-dialog-title>{{data.title}}</h1>
     </div>
-    <div mat-dialog-content>
+    <div mat-dialog-content *ngIf="data.pageAction == 'Delete'">
       <mat-grid-list cols="2" rowHeight="2:1" [gutterSize]="'10px'">
         Kindly Confrim for Deletion
       </mat-grid-list>
@@ -29,6 +29,18 @@
       <!-- <app-dynamic-fields [pageName]="selectedPageName" [fldDataArray]="data" [pageAction]="this.data.pageAction"
         (dynamicFormResponse)="getDynamicFormValue($event)" (closeFlag)="onNoClick($event)" [buttonToShow]="showButton">
       </app-dynamic-fields> -->
+    </div>
+    <div mat-dialog-content *ngIf="data.pageAction == 'logout'">
+      <mat-grid-list cols="2" rowHeight="2:1" [gutterSize]="'10px'">
+        Kindly Confirm for Logout
+      </mat-grid-list>
+
+      <mat-grid-list cols="2" rowHeight="2:1" [gutterSize]="'10px'">
+        <button *ngIf="data.pageAction == 'logout'" mat-raised-button color="primary" type="submit"
+          (click)="onAcceptOrCancel(true)" class="actionButton">Logout</button>
+        <button mat-raised-button color="warn" type="submit"
+          (click)="onAcceptOrCancel(false)">Cancel</button>
+      </mat-grid-list>
     </div>
   </div>
 </ng-container>

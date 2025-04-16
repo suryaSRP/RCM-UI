@@ -5,6 +5,8 @@ import { BaseStructureComponent } from './base-structure/base-structure.componen
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmployeeManagementComponent } from '../employee-management/employee-management.component';
 import { EventManagementComponent } from '../event-management/event-management.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { BillGeneratorComponent } from './bill-generator/bill-generator.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dboard', pathMatch: 'full' },
@@ -20,6 +22,12 @@ const routes: Routes = [
   }, {
     path: "empDetails",
     component: EmployeeManagementComponent,
+  }, {
+    path: 'inventory',
+    component: InventoryComponent
+  }, {
+    path: 'billRequest',
+    component: BillGeneratorComponent
   }
 ];
 

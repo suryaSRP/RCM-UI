@@ -6,11 +6,37 @@
   // overflow: hidden;
   max-height: calc(75vh - 10px);
     overflow: hidden;
-    margin: 0px 0px 0px 6%;
+    margin-top: 5px;
   .tableComp {
     margin: 1% 1% 1% 6%;
     height: 80%;
     width: calc(100% - 106px);
+  }
+  .table-header-container{
+
+  .table-title-container{
+    flex:1;
+    .table-title{
+      font-size: 20px;
+    }
+  }
+  .settings{
+    margin-left:auto;
+    button{
+      text-transform: unset;
+      display: flex;
+      align-items: center;
+      span{
+        color:black
+        // color:$brand-primary
+      }
+    }
+    gear{
+      font-size: 1.525rem;
+      height: 1.525rem;
+      width: 1.525rem;
+    }
+  }
   }
   .table-area-container{
     width: 100%;

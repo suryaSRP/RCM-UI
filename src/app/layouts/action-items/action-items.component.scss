@@ -49,17 +49,17 @@
 .toggle input:checked + label:first-of-type{
   border-radius: 26px ;
   right: -10px;
-  background-color: #3f51b5;
+  background-color: #4e86bf;
   color: #fff;
-  border-color: #3f51b5;
+  border-color: #4e86bf;
   z-index: 1;
 }
 .toggle input + label:last-of-type{
   border-radius: 26px ;
   right: 20px;
-  background-color: #3f51b5;
+  background-color: #4e86bf;
   color: #fff;
-  border-color: #3f51b5;
+  border-color: #4e86bf;
   z-index: 1;
 }
 // @media(max-width:1200px){

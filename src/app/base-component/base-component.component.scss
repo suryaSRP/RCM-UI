@@ -1,0 +1,14 @@
+.home-main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .cardContainer{
+    height: 90%;
+    margin-left: calc(100% - 93%)
+
+  }
+  .col-1 {
+    flex: 0 0 auto;
+    width: 7%;
+}

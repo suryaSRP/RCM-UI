@@ -14,7 +14,7 @@ export interface DialogData {
   validation: {};
   getQuery: {};
   pageAction: any;
-  formValue:Array<{}>;
+  formValue: Array<{}>;
 }
 @Component({
   selector: 'app-mat-dialog',
@@ -41,6 +41,16 @@ export class MatDialogComponent implements OnInit {
     console.log(flag, "flag_on_click")
     if (flag)
       this.dialogRef.close();
+  }
+  onAcceptOrCancel(flag: any) {
+    console.log(flag, "flag_on_click")
+    if (flag) {
+      this.dialogRef.close(flag);
+    }
+    else {
+      this.dialogRef.close();
+    }
+
   }
   getDynamicFormValue(value: any) {
     console.log(value, "getDynamicFormValue_getDynamicFormValue_getDynamicFormValue")
