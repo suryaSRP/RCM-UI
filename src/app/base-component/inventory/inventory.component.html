@@ -9,8 +9,9 @@
                 [rowActions]="sourceDataArray[0]?.rowActions" [columns]="sourceDataArray[0]?.workFlowTableColumns"
                 [allColumnsSortable]="true" #workFlowTable [tableOptions]="sourceDataArray[0]?.tableOptions"
                 (pageChanged)="pageChangedEvent($event)" [tableTitle]="sourceDataArray[0]?.tableTitle"
-                [totalCount]="sourceDataArray[0]?.totalCount"
-                (onRowActionBtnClicked)="actionButtonClicked($event)"></dy-table>
+                [totalCount]="sourceDataArray[0]?.totalCount" [addDataFormBtnLabel]="'Product'"
+                (onRowActionBtnClicked)="actionButtonClicked($event)"[addDataFormBtn]=true
+                (addFormEvent)="addFormEvent($event)"></dy-table>
         </div>
 
 

@@ -24,7 +24,7 @@ export class ApiServiceService {
     return this.httpClient.get(`${this.API_URL}/api/pstnDtls/${orgId}`, { headers: this.headers })
   }
   empDtlsBasedOnOrg(orgId: any): Observable<any> {
-    console.log("cmpany services hitted")
+    console.log("company services hit")
     return this.httpClient.get(`${this.API_URL}/api/empDtls/${orgId}`, { headers: this.headers })
   }
 

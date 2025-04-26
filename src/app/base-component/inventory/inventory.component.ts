@@ -1,10 +1,16 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialogComponent } from 'src/app/common/modal/mat-dialog/mat-dialog.component';
 import { ColumnOption, TableOptions } from 'src/app/layouts/table/table.component';
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import { ProductService } from 'src/app/services/product.service';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 import { inventoryData } from 'src/app/utils/mockData';
 import { defaultPageSize, pageSizeOptions } from 'src/app/utils/shared/constants';
 import { inventoryTableColumn } from 'src/app/utils/shared/headers.ts/columnHeaders';
-import { inventoryList } from 'src/app/utils/shared/interfaces/stuctureInterFace';
+import { InventoryList } from 'src/app/utils/shared/interfaces/stuctureInterFace';
 
 @Component({
   selector: 'app-inventory',
@@ -15,7 +21,7 @@ import { inventoryList } from 'src/app/utils/shared/interfaces/stuctureInterFace
 export class InventoryComponent implements OnInit, AfterViewInit {
   public sourceDataArray: any = []
   public workFlowDataSource: MatTableDataSource<any> = new MatTableDataSource<any>()
-  public sourceData: Array<inventoryList> = []
+  public sourceData: Array<InventoryList> = []
   public contentFlag: any = {
     actionButton: true,
     actionButtonArray: [{
@@ -35,13 +41,22 @@ export class InventoryComponent implements OnInit, AfterViewInit {
 
   }
   public workFlowTableColumns!: ColumnOption[];
-  constructor() { }
+  flds: any;
+  existingData: any;
+  currentGivenData: any;
+  constructor(
+    public apiservice: ApiServiceService,
+    public dialog: MatDialog,
+    public productService: ProductService,
+    // public snackBar: MatSnackBar
+    public snackBarService:SnackbarService
+  ) { }
 
   ngOnInit(): void {
     this.workFlowTableColumns = inventoryTableColumn
     this.getInventoryData()
-    this.sourceData = new Array<inventoryList>()
-    this.sourceData = inventoryData
+    this.sourceData = new Array<InventoryList>()
+    // this.sourceData = inventoryData
     this.workFlowDataSource = new MatTableDataSource<any>(this.sourceData)
     this.sourceDataArray = [
       {
@@ -56,31 +71,56 @@ export class InventoryComponent implements OnInit, AfterViewInit {
     ]
   }
   getInventoryData() {
-
+this.productService.listProduct().subscribe({
+  next: (resp: any) => {
+    console.log(resp, "resp")
+    if (resp) {
+      this.sourceData = resp.data
+      // this.workFlowDataSource = new MatTableDataSource<any>(this.sourceData)
+      // this.workFlowDataSource.paginator = this.tableOption.paginator
+      // this.workFlowDataSource.sort = this.tableOption.sort
+    }  
+  }
+})
   }
   pageChangedEvent(pageEvent: any) { }
   actionButtonClicked(actionEvent: any) { }
   ngAfterViewInit() {
   }
+  addFormEvent(event: any) {
+    console.log(event, "addFormEvent");
+    this.apiservice.fetchFlds(event.formFor, 'create').subscribe(resp => {
+      this.flds = resp
+      const dialogRef = this.dialog.open(MatDialogComponent, {
+        width: '750px',
+        data: {
+          title: 'Add Product', showas: 'form', flds: this.flds, validation: { duplicateCheck: this.existingData },
+          page: event.formFor, action: ["create", "cancel"], currentData: this.currentGivenData, pageAction: "Create"
+        }
+      });
+      const dialogSubmitSubscription = dialogRef.componentInstance.submitClicked.subscribe({
+        next: (result: any) => {
+          console.log(result, "result")
+          this.productService.createProduct(result).subscribe({
+            next: (resp: any) => {
+              console.log(resp, "resp")
+              if (resp) {
+
+              }
+            },
+            error: (error: any) => {
+              let config = new MatSnackBarConfig();
+              config.duration = 5000;
+              config.panelClass = ['red-snackbar']
+              this.snackBarService.error(error.error.message)
+            }
+          })
+        },
+        error: (error: any) => {
+          console.log('Error:', error);
+        }
+      });
+
+    })
+  }
 }
-//   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-//   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-//   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-//   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-//   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-//   {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-//   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-//   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-//   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-//   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-//   {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-//   {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-//   {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-//   {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-//   {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-//   {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-//   {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-//   {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-//   {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-//   {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-// ];

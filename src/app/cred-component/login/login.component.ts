@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.clientDetails = this.route.snapshot.data['clientResolver'].data
+    console.log(this.route.snapshot.paramMap,"this.route.snapshot")
     console.log(this.clientDetails,"this.clientDetailsthis.clientDetailsthis.clientDetails")
     this.knownClient = this.clientDetails.length > 0 ? true : false
     localStorage.setItem('clientCd', this.clientDetails.length > 0 ? this.clientDetails[0]["clientCd"] : "NoClient");

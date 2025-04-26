@@ -71,7 +71,7 @@ export class DynamicFieldsComponent implements OnInit {
       console.log(finalData, "finalDatafinalDatafinalDatafinalData")
       // this.apiService.createOrgPstn(this.fldDataArray.page, finalData).subscribe(resp => {
       //   console.log(resp, "resp_on_create")
-      //   this.dynamicFormResponse.emit(resp)
+        this.dynamicFormResponse.emit(finalData)
       // })
     } else {
       return
@@ -121,9 +121,7 @@ export class DynamicFieldsComponent implements OnInit {
     this.closeFlag.emit(true)
   }
   checkValue(fldName: any, event: any) {
-    console.log(fldName, "fldNamefldNamefldNamefldNamefldName", event)
-    console.log(this.fldDataArray, "this.fldDataArraythis.fldDataArraythis.fldDataArray", this.fldDataArray.validation.duplicateCheck[fldName])
-    if (this.fldDataArray.validation.duplicateCheck && this.fldDataArray.validation.duplicateCheck[fldName]) {
+    if (this.fldDataArray.validation.duplicateCheck && this.fldDataArray.validation.duplicateCheck?.[fldName]) {
       if (this.customIndexOf(this.fldDataArray.validation.duplicateCheck[fldName], event) > -1) {
         this.dynamicForm.controls[fldName].setErrors({ 'Duplicate': true })
       }

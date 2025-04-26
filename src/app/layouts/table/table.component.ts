@@ -81,7 +81,7 @@ export interface APIColumn {
   styleUrls: ['./table.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class TableComponent implements AfterViewInit, OnInit , TableExporter, OnChanges {
+export class TableComponent implements AfterViewInit, OnInit, TableExporter, OnChanges {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator
   @ViewChild('exporter') exporter!: MatTableExporterDirective;
@@ -170,6 +170,10 @@ export class TableComponent implements AfterViewInit, OnInit , TableExporter, On
 
   @Input() totalCount!: number;
   @Output() pageChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Input() addDataFormBtn: boolean = false;
+  @Input() addDataFormBtnLabel: string = "Add Data";
+  @Input() addFormInput: FormData = new FormData();
+  @Output() addFormEvent: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private matIconRegistry: MatIconRegistry,
     private paginatorIntl: MatPaginatorIntl,
@@ -206,7 +210,7 @@ export class TableComponent implements AfterViewInit, OnInit , TableExporter, On
     this.onInit()
     // let adminColumn:any = JSON.parse(this.browserStoreManagerService.getCookies(this.router.url) || 'null')
     // if(adminColumn){
-      // this.updateUserPreferences([])
+    // this.updateUserPreferences([])
     // }
   }
 
@@ -238,29 +242,29 @@ export class TableComponent implements AfterViewInit, OnInit , TableExporter, On
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    if(this.options?.enableCheckBoxSelection || this.options?.enableRadioSelection) {
+    if (this.options?.enableCheckBoxSelection || this.options?.enableRadioSelection) {
       moveItemInArray(this.displayedColumns, event.previousIndex + 1, event.currentIndex + 1);
     } else {
       moveItemInArray(this.displayedColumns, event.previousIndex, event.currentIndex);
     }
     this.changedColumns.emit({
-        original: this.columns,
-        visible: this.displayedColumns,
-      });
+      original: this.columns,
+      visible: this.displayedColumns,
+    });
     this.columns.map(item => item.columnDef).filter((item: any) => !this.displayedColumns.includes(item)).map((item: any, i: number) => {
-        this.display_column.push({
-          name: item,
-          display: this.displayedColumns.includes(item),
-          order: (this.displayedColumns.length + i).toString()
-        });
+      this.display_column.push({
+        name: item,
+        display: this.displayedColumns.includes(item),
+        order: (this.displayedColumns.length + i).toString()
       });
+    });
 
     this.updateColumnOrder(this.displayedColumns);
     const columnHeader = []
-    for( let i = 0; i < this.columns.length;i++){
-       if(this.displayedColumns.includes(this.columns[i].columnDef)){
-           columnHeader.push(this.columns[i].header)
-       }
+    for (let i = 0; i < this.columns.length; i++) {
+      if (this.displayedColumns.includes(this.columns[i].columnDef)) {
+        columnHeader.push(this.columns[i].header)
+      }
     }
     //  this.browserStoreManagerService.setCookies(this.router.url,JSON.stringify(columnHeader));
   }
@@ -456,6 +460,10 @@ export class TableComponent implements AfterViewInit, OnInit , TableExporter, On
     if (event.direction) {
       this._liveAnnouncer.announce('descending');
     }
+  }
+  addFormData() {
+    console.log("this.addFormInput");
+    this.addFormEvent.emit({ 'addForm': true, 'formFor': this.addDataFormBtnLabel });
   }
 }
 

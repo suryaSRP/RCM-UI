@@ -12,6 +12,7 @@ import { clientDetailResolver } from '../common/resolver/baseComponent-resolver'
 import { LayoutsModule } from '../layouts/layouts/layouts.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/:clntId/login', pathMatch: 'full' },
@@ -35,7 +36,7 @@ const routes: Routes = [
     MatToolbarModule,
     AppMaterialModule,
     ModalModule,
-    DynamicFieldsModule],
+    DynamicFieldsModule,MatIconModule],
   exports: [RouterModule]
 })
 export class CredComponentRoutingModule { }

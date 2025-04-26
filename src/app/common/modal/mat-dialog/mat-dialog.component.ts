@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -26,6 +26,8 @@ export class MatDialogComponent implements OnInit {
   public dynamicForm = new FormGroup({})
   public selectedPageName: string = ""
   public showButton: any = []
+
+@Output() submitClicked = new EventEmitter<any>();
   constructor(
     public apiservice: ApiServiceService,
     public dialogRef: MatDialogRef<MatDialogComponent>,
@@ -54,10 +56,8 @@ export class MatDialogComponent implements OnInit {
   }
   getDynamicFormValue(value: any) {
     console.log(value, "getDynamicFormValue_getDynamicFormValue_getDynamicFormValue")
-    if (value.status == "success") {
-      this.dialogRef.close();
-      window.location.reload()
-    }
+    this.submitClicked.emit(value);
+    // this.dialogRef.close(value);
   }
   submitForm(): void {
     console.log(this.dynamicForm, "this.dynamicForm_this.dynamicForm_this.dynamicForm")

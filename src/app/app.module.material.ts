@@ -10,7 +10,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -24,6 +24,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
+const matSnackbarDefaultConfig: MatSnackBarConfig = {
+  verticalPosition: 'top',
+  horizontalPosition: 'right',
+  duration: 4000,
+};
 
 @NgModule({
   imports: [
@@ -55,6 +60,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatListModule, MatExpansionModule,
     MatDatepickerModule, MatFormFieldModule,
     MatNativeDateModule,
+  ],
+  providers: [
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: matSnackbarDefaultConfig,
+    },
   ],
 })
 export class AppMaterialModule { }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogComponent } from 'src/app/common/modal/mat-dialog/mat-dialog.component';
 import { credService } from 'src/app/services/credService.service';
@@ -19,16 +19,37 @@ export class NavBarComponent implements OnInit {
   public userLoggedin: boolean = false
   public imagePath: any = "src/assets/images/clientImages/starkindustries.png";
   public loggedInRole: any = localStorage.getItem('role');
-  constructor(public credServices: credService, private route: ActivatedRoute,
+
+  constructor(
+    public credServices: credService, 
+    private route: ActivatedRoute,
     public router: Router,
     public dialog: MatDialog,
-    iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
-      'my-star-icon',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/my-star-icon.svg'));
+    // iconRegistry: MatIconRegistry, 
+    sanitizer: DomSanitizer,
+    private domSanitizer: DomSanitizer,
+    private matIconRegistry: MatIconRegistry,
+  ) {
+    // this.iconRegistry.addSvgIcon(
+    //   'my-star-icon',
+    //   sanitizer.bypassSecurityTrustResourceUrl('assets/icons/my-star-icon.svg'));
+    // iconRegistry.addSvgIcon(
+    //   'emeral',
+    //   sanitizer.bypassSecurityTrustResourceUrl('assets/icons/emeral.svg'));
+
+    this.matIconRegistry.addSvgIcon(
+      'emeral',
+      this.setPath('src/app/assets/icons/plus.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'gear',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/gear.svg')
+    );
   }
 
-
+  private setPath(url: string): SafeResourceUrl {
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
+  }
   ngOnInit(): void {
     console.log(this.loggedInRole, "loggedInRoleloggedInRoleloggedInRoleloggedInRole")
     this.userLoggedin = (this.credServices.isLoggedIn() == true) ? true : false
@@ -46,7 +67,7 @@ export class NavBarComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,"reukltttt")
+      console.log(result, "reukltttt")
       if (result) {
 
         this.credServices.logout()
@@ -58,17 +79,17 @@ export class NavBarComponent implements OnInit {
       this.router.navigate([`/${this.clientCode}/base`])
     }
   }
-  toDashboard(){
+  toDashboard() {
     if (this.userLoggedin) {
       this.router.navigate([`/${this.clientCode}/dboard`])
     }
   }
-  toBillRequest(){
+  toBillRequest() {
     if (this.userLoggedin) {
       this.router.navigate([`/${this.clientCode}/billRequest`])
     }
   }
-  toInventory(){
+  toInventory() {
     if (this.userLoggedin) {
       this.router.navigate([`/${this.clientCode}/inventory`])
     }
@@ -90,7 +111,7 @@ export class NavBarComponent implements OnInit {
   contactUs() {
     alert('You Have contacted ADMIN')
   }
-  billingRequest(){
+  billingRequest() {
     if (this.userLoggedin) {
       this.router.navigate([`/${this.clientCode}/base`])
     }

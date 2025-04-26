@@ -12,7 +12,9 @@ export class AuthInterceptor implements HttpInterceptor {
         req = req.clone({
             setHeaders: {
                 Authorization: `JWT ${accessToken}`,
-                "clientsid":`${localStorage.getItem("clientCd")};${localStorage.getItem("userLoggedIn")};${localStorage.getItem("role")}`
+                "userId": `${localStorage.getItem("userLoggedIn")}`,
+                "role": `${localStorage.getItem("role")}`,
+                "clientsid":`${localStorage.getItem("clientCd")}`,
             }
         });
         return next.handle(req);

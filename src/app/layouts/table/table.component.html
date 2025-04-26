@@ -32,15 +32,15 @@
     <div *ngIf="tableTitle && tableTitle !==''" class="table-title-container">
       <div class="row">
         <div class="col-6">
-          <label class="table-title">{{ tableTitle  }}</label>
+          <label class="table-title">{{ tableTitle }}</label>
         </div>
-<div class="col-6" style="text-align: end;">
-  <button mat-button class="trans settings--filter" (click)="openColumnSettings()">
-    <mat-icon svgIcon="plus" style="height: 15px;
+        <div class="col-6" style="text-align: end;" *ngIf="addDataFormBtn">
+          <button mat-button class="trans settings--filter" (click)="addFormData()">
+            <mat-icon svgIcon="plus" style="height: 15px;
     margin: 0 0 23px 0px;"></mat-icon>
-    {{ "Product"  }}
-  </button>
-</div>
+            {{ addDataFormBtnLabel }}
+          </button>
+        </div>
       </div>
     </div>
     <!-- <button mat-raised-button class="classicBtn">
@@ -73,8 +73,7 @@
 
   <div class="table-area-container">
     <table *ngIf="(dataSource?.data?.length && dataSource?.filteredData?.length); else noData" mat-table
-      [dataSource]="dataSource" cdkDropList cdkDropListOrientation="horizontal" matSort matTableExporter
-     >
+      [dataSource]="dataSource" cdkDropList cdkDropListOrientation="horizontal" matSort matTableExporter>
 
       <!-- <ng-container *ngIf="options.enableCheckBoxSelection && dataSource.data.length > 0" matColumnDef="select" sticky>
         <th mat-header-cell *matHeaderCellDef>
@@ -123,7 +122,7 @@
           <div class="table-row-button-container">
             <div *ngFor="let item of rowAction.rowActions" (click)="onRowActionClicked(item, row, i)">
               <div *ngIf="item.type === 'button'">
-                <button mat-button class="{{item.btnClass ? item.btnClass : 'table-default'}}">{{item.label  }}
+                <button mat-button class="{{item.btnClass ? item.btnClass : 'table-default'}}">{{item.label }}
                   <mat-icon *ngIf="item.matIconName">{{item.matIconName}}</mat-icon>
                   <img *ngIf="item.iconPath" [src]="item.iconPath" class="image-icon" alt="" />
                 </button>
@@ -146,11 +145,32 @@
       <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
 
     </table>
-    
+
     <ng-template #noData>
-      
+      <div class="row">
+        <div class="col-6">
+          <label class="table-title">{{ tableTitle }}</label>
+        </div>
+
+        <div class="col-6" style="text-align: end;" *ngIf="addDataFormBtn">
+          <button mat-button class="trans settings--filter" (click)="addFormData()">
+            <mat-icon svgIcon="plus" style="height: 15px;
+          margin: 0 0 23px 0px;"></mat-icon>
+            {{ addDataFormBtnLabel }}
+          </button>
+        </div>
+
+      </div>
       <div class="no-data-text">
-        {{options.emptyOptionsText || "GENRAL.NO_DATA_AVAILABLE" }}
+        <div class="col-12">
+<div class="col-3"></div>
+        <div class="col-6" style="text-align: end;">
+
+          {{options.emptyOptionsText || "GENRAL.NO_DATA_AVAILABLE" }}
+        </div>
+
+<div class="col-3"></div>
+      </div>
       </div>
     </ng-template>
   </div>
