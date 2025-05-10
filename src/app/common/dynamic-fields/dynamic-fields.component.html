@@ -58,6 +58,22 @@
           <mat-option> Select </mat-option>
           <mat-option *ngFor="let option of field.options" [value]="option.id">{{ option.name }}
           </mat-option>
+          <!-- <footer>
+            <button mat-raised-button style="min-width: 100%;" (click)="addCategory({formFor:field.fld_nm})">Add {{field.displayName}}</button>
+        </footer> -->
+        </mat-select>
+        <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('required')">{{field.displayName}} is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" *ngIf="field.type == 'dynamicSelect'">
+        <mat-label>{{field.displayName}}</mat-label>
+        <mat-select matInput placeholder="{{field.displayName}}" [formControlName]="field.fld_nm" autocomplete="off">
+          <mat-option> Select </mat-option>
+          <mat-option *ngFor="let option of field.options" [value]="option.id">{{ option.name }}
+          </mat-option>
+          <!-- <footer>
+            <button mat-raised-button style="min-width: 100%;" (click)="addCategory({formFor:field.fld_nm})">Add {{field.displayName}}</button>
+        </footer> -->
         </mat-select>
         <mat-error *ngIf="dynamicForm.get(field.fld_nm)?.hasError('required')">{{field.displayName}} is required
         </mat-error>

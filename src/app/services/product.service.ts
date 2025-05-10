@@ -21,4 +21,7 @@ export class ProductService {
 listProduct(): Observable<any> {
     return this.httpClient.get(`${this.API_URL}/api/productList`, { headers: this.headers })
   }
+  getCategory(): Observable<any> {
+    return this.httpClient.get(`${this.API_URL}/api/categoryList`, { headers: this.headers })
+  }
 }

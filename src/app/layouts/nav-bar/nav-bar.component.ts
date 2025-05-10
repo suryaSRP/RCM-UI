@@ -94,6 +94,11 @@ export class NavBarComponent implements OnInit {
       this.router.navigate([`/${this.clientCode}/inventory`])
     }
   }
+  toProduct() {
+    if (this.userLoggedin) {
+      this.router.navigate([`/${this.clientCode}/product`])
+    }
+  }
   todaySchedule() {
     if (this.userLoggedin) {
       this.router.navigate([`/${this.clientCode}/todaySchedule`])

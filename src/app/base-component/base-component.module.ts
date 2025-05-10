@@ -24,6 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { InventoryComponent } from './inventory/inventory.component';
 import { BillGeneratorComponent } from './bill-generator/bill-generator.component';
+import { InventoryProductComponent } from './inventory/inventory-product/inventory-product.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { BillGeneratorComponent } from './bill-generator/bill-generator.componen
     EventManagementComponent,
     TableComponent,
     InventoryComponent,
-    BillGeneratorComponent
+    BillGeneratorComponent,
+    InventoryProductComponent
   ],
   imports: [
     CommonModule,

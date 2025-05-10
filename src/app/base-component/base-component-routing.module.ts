@@ -7,6 +7,7 @@ import { EmployeeManagementComponent } from '../employee-management/employee-man
 import { EventManagementComponent } from '../event-management/event-management.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { BillGeneratorComponent } from './bill-generator/bill-generator.component';
+import { InventoryProductComponent } from './inventory/inventory-product/inventory-product.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dboard', pathMatch: 'full' },
@@ -28,6 +29,10 @@ const routes: Routes = [
   }, {
     path: 'billRequest',
     component: BillGeneratorComponent
+  },
+  {
+    path: 'product',
+    component: InventoryProductComponent
   }
 ];
 

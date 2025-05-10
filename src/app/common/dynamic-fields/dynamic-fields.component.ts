@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { ApiServiceService } from 'src/app/services/api-service.service';
+import { MatDialogComponent } from '../modal/mat-dialog/mat-dialog.component';
 
 @Component({
   selector: 'app-dynamic-fields',
@@ -17,7 +19,8 @@ export class DynamicFieldsComponent implements OnInit {
   public dynamicForm = new FormGroup({})
   public dynamicFlds: Array<any> = [];
   constructor(
-    private apiService: ApiServiceService
+    private apiService: ApiServiceService,
+        public dialog: MatDialog,
   ) { }
   events: string[] = [];
   public isEdit = false;
@@ -58,6 +61,9 @@ export class DynamicFieldsComponent implements OnInit {
           console.log(data, "get_position_details")
           formFlds.options = data.data
         })
+      }
+      if(formFlds.type =='dynamicSelect'){
+
       }
     })
     this.dynamicFlds.sort((a, b) => {
@@ -168,5 +174,18 @@ export class DynamicFieldsComponent implements OnInit {
         }
       })
     }
+  }
+  addCategory(event: any) {
+    console.log(event, "addCategory")
+    this.apiService.fetchFlds(event.formFor, 'create').subscribe(resp => {
+    // this.flds = resp
+          const dialogRef = this.dialog.open(MatDialogComponent, {
+            width: '750px',
+            data: {
+              title: 'Add '+ `${event.formFor}`, showas: 'form', flds: resp, 
+              page: event.formFor, action: ["create", "cancel"], pageAction: "Create"
+            }
+          });
+    })
   }
 }

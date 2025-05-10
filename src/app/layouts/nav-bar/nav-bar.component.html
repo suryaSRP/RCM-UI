@@ -5,11 +5,11 @@
         <ul class="nav-links topLinks">
           <li >
             <span (click)="toDashboard()">
-              <mat-icon>home</mat-icon>
+              <!-- <mat-icon>home</mat-icon> -->
               <!-- <mat-icon svgIcon="emeral"></mat-icon> -->
               <!-- <mat-icon svgIcon="emeral"></mat-icon> -->
               <!-- <mat-icon svgIcon="gear"></mat-icon> -->
-              <!-- <i class="fa fa-apple" aria-hidden="true"></i> -->
+              <i class="fa fa-apple" aria-hidden="true"></i>
             </span>
           </li> 
           </ul>
@@ -30,7 +30,8 @@
           <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
             <i class="bx bx-food-menu"  (click)="toInventory()"></i>
             <ul class="sub-menu blank">
-              <li><a class="link_name" (click)="toInventory()">Inventory</a></li>
+              <li ><a class="link_name" (click)="toInventory()">Inventory</a></li>
+              <li><a class="link_name" (click)="toProduct()">Product</a></li>
             </ul>
           </li>
           <li *ngIf="loggedInRole == 8 || loggedInRole == 1">
